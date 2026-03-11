@@ -110,3 +110,107 @@ CONSTRAINT fk_cancellationItem_cancellation FOREIGN KEY (cancellationID) REFEREN
 CONSTRAINT fk_cancellationItem_orderItem FOREIGN KEY (orderItemID) REFERENCES orderItem(orderItemID),
 CONSTRAINT chk_refundAmt_nonnegative CHECK (refundAmt >= 0)
 );
+
+CREATE TABLE systemAdmin (
+adminID INT GENERATED ALWAYS AS IDENTITY,
+email VARCHAR(255) NOT NULL,
+password VARCHAR(255) NOT NULL,
+status BOOLEAN NOT NULL,
+department VARCHAR(100) NOT NULL,
+CONSTRAINT pk_systemAdmin PRIMARY KEY (adminID)
+);
+
+CREATE TABLE systemUser (
+userID INT GENERATED ALWAYS AS IDENTITY,
+name VARCHAR(100) NOT NULL,
+email VARCHAR(255) NOT NULL,
+password VARCHAR(255) NOT NULL,
+status BOOLEAN NOT NULL,
+gender VARCHAR(10) NOT NULL,
+contactNo VARCHAR(15) NOT NULL,
+DOB DATE NOT NULL,
+memberStatus BOOLEAN NOT NULL,
+memberPoint INT NOT NULL,
+CONSTRAINT pk_systemUser PRIMARY KEY (userID),
+CONSTRAINT chk_gender CHECK (gender IN ('Male', 'Female')),
+CONSTRAINT chk_memberPoint_nonnegative CHECK (memberPoint >= 0),
+CONSTRAINT chk_contactNo_format CHECK (contactNo ~ '^[0-9+-]+$')
+);
+
+CREATE TABLE address (
+addressID INT GENERATED ALWAYS AS IDENTITY,
+unit VARCHAR(50),
+building VARCHAR(100),
+street VARCHAR(200) NOT NULL,
+city VARCHAR(100) NOT NULL,
+postcode VARCHAR(10) NOT NULL,
+state VARCHAR(100) NOT NULL,
+country VARCHAR(100) NOT NULL,
+userID INT NOT NULL,
+CONSTRAINT pk_address PRIMARY KEY (addressID),
+CONSTRAINT fk_address_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
+);
+
+CREATE TABLE membershipType (
+typeID INT GENERATED ALWAYS AS IDENTITY,
+type VARCHAR(50) NOT NULL,
+description VARCHAR(255) NOT NULL,
+charges DECIMAL(10,2) NOT NULL,
+coinRate DECIMAL(5,2) NOT NULL,
+discountRate DECIMAL(5,2) NOT NULL,
+birthCoin INT NOT NULL,
+birthDiscount DECIMAL(5,2) NOT NULL,
+deliveryPriority INT NOT NULL,
+createdBy INT NOT NULL,
+CONSTRAINT pk_membershipType PRIMARY KEY (typeID),
+CONSTRAINT fk_membershipType_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
+CONSTRAINT chk_charges_positive CHECK (charges > 0),
+CONSTRAINT chk_coinRate_positive CHECK (coinRate >= 0),
+CONSTRAINT chk_discountRate_range CHECK (discountRate BETWEEN 0 AND 100),
+CONSTRAINT chk_birthCoin_positive CHECK (birthCoin >= 0),
+CONSTRAINT chk_birthDiscount_range CHECK (birthDiscount BETWEEN 0 AND 100),
+CONSTRAINT chk_deliveryPriority_positive CHECK (deliveryPriority > 0)
+);
+
+CREATE TABLE subscription (
+subscriptionID INT GENERATED ALWAYS AS IDENTITY,
+date DATE NOT NULL,
+expiration DATE NOT NULL,
+status VARCHAR(20) NOT NULL,
+userID INT NOT NULL,
+typeID INT NOT NULL,
+paymentID INT NOT NULL,
+CONSTRAINT pk_subscription PRIMARY KEY (subscriptionID),
+CONSTRAINT fk_subscription_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
+CONSTRAINT fk_subscription_membershipType FOREIGN KEY (typeID) REFERENCES membershipType(typeID),
+CONSTRAINT fk_subscription_payment FOREIGN KEY (paymentID) REFERENCES payment(paymentID),
+CONSTRAINT chk_subscription_dates CHECK (expiration >= date),
+CONSTRAINT chk_subscription_status CHECK (status IN ('Active', 'Unactive'))
+);
+
+CREATE TABLE restaurant (
+restaurantID INT GENERATED ALWAYS AS IDENTITY,
+restaurantName VARCHAR(200) NOT NULL,
+cuisineType VARCHAR(100) NOT NULL,
+serviceStyle VARCHAR(100) NOT NULL,
+openingHours TIME NOT NULL,
+closingHours TIME NOT NULL,
+serviceTax DECIMAL(5,2) NOT NULL,
+halal BOOLEAN NOT NULL,
+availability BOOLEAN NOT NULL,
+addressID INT NOT NULL,
+CONSTRAINT pk_restaurant PRIMARY KEY (restaurantID),
+CONSTRAINT fk_restaurant_address FOREIGN KEY (addressID) REFERENCES address(addressID),
+CONSTRAINT chk_restaurant_hours CHECK (closingHours > openingHours),
+CONSTRAINT chk_serviceTax_range CHECK (serviceTax >= 0 AND serviceTax <= 100),
+);
+
+CREATE TABLE restaurantUser (
+userID INT NOT NULL,
+restaurantID INT NOT NULL,
+accessLevel INT NOT NULL,
+CONSTRAINT pk_restaurantUser PRIMARY KEY (userID, restaurantID),
+CONSTRAINT fk_restaurantUser_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
+CONSTRAINT fk_restaurantUser_restaurant FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
+CONSTRAINT chk_accessLevel_range CHECK (accessLevel BETWEEN 1 AND 5)
+);
