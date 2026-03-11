@@ -7,4 +7,5 @@
 2) Write your SQL CreateTable inside 'CreateTable' file
 3) Click the pencil icon to Edit file, afer each edit please leave useful commit message
 <img width="800" height="294" alt="image" src="https://github.com/user-attachments/assets/fc4cb552-a655-457a-aab2-88f1cb6d0c51" />
-4) Please dont mess up the whole thing
+
+Please dont mess up the whole thing
