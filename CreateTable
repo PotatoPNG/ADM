@@ -331,5 +331,6 @@ CREATE TABLE COMPENSATIONITEM(
 //DeliverySchedule
 //Ratings
 //Cancellation
+//CancellationItem
 //Compensation
 //CompensationItem
