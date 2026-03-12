@@ -3,7 +3,6 @@
 #name here
 #name here
 
-
 -- Table created --
 SystemAdmin
 SystemUser
@@ -36,6 +35,36 @@ CancellationItem ✅
 Compensation ✅
 CompensationItem ✅
 
-
+-- Insert statement --
+SystemAdmin
+SystemUser
+Address
+Restaurant
+Application
+RestaurantUser
+Menu
+MenuItem
+MultiMenuItem
+Campaign
+ParticipatedRestaurant
+Voucher
+CampaignVoucher
+VoucherUser
+Cart ✅
+CartItem ✅
+Order ✅
+OrderItem ✅
+Payment 
+MembershipType
+Subscription
+DeliveryTier ✅
+DeliveryDriver ✅
+DeliveryDriverKPI ✅
+DeliverySchedule ✅
+Ratings
+Cancellation ✅
+CancellationItem ✅
+Compensation ✅
+CompensationItem ✅
 
 
