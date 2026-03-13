@@ -10,9 +10,9 @@ Address ✅
 Restaurant ✅
 Application ✅
 RestaurantUser ✅
-Menu
-MenuItem
-MultiMenuItem
+Menu ✅
+MenuItem ✅
+MultiMenuItem ✅
 Campaign
 ParticipatedRestaurant
 Voucher
@@ -22,14 +22,14 @@ Cart ✅
 CartItem ✅
 Order ✅
 OrderItem ✅
-Payment 
+Payment ✅
 MembershipType
 Subscription
 DeliveryTier ✅
 DeliveryDriver ✅
 DeliveryDriverKPI ✅
 DeliverySchedule ✅
-Ratings
+Ratings ✅
 Cancellation ✅
 CancellationItem ✅
 Compensation ✅
@@ -40,10 +40,10 @@ SystemAdmin
 SystemUser
 Address
 Restaurant
-Application
+Application ✅
 RestaurantUser
 Menu
-MenuItem
+MenuItem ✅
 MultiMenuItem
 Campaign
 ParticipatedRestaurant
@@ -54,14 +54,14 @@ Cart ✅
 CartItem ✅
 Order ✅
 OrderItem ✅
-Payment 
+Payment ✅
 MembershipType
 Subscription
 DeliveryTier ✅
 DeliveryDriver ✅
 DeliveryDriverKPI ✅
 DeliverySchedule ✅
-Ratings
+Ratings ✅
 Cancellation ✅
 CancellationItem ✅
 Compensation ✅
