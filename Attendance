@@ -4,12 +4,12 @@
 #name here
 
 -- Table created --
-SystemAdmin
-SystemUser
-Address
-Restaurant
-Application
-RestaurantUser
+SystemAdmin ✅
+SystemUser ✅
+Address ✅
+Restaurant ✅
+Application ✅
+RestaurantUser ✅
 Menu
 MenuItem
 MultiMenuItem
