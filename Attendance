@@ -45,11 +45,11 @@ RestaurantUser
 Menu✅
 MenuItem ✅
 MultiMenuItem✅
-Campaign
-ParticipatedRestaurant
-Voucher
-CampaignVoucher
-VoucherUser
+Campaign ✅
+ParticipatedRestaurant✅
+Voucher✅
+CampaignVoucher✅
+VoucherUser✅
 Cart ✅
 CartItem ✅
 Order ✅
