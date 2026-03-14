@@ -146,7 +146,7 @@ city VARCHAR(100) NOT NULL,
 postcode VARCHAR(10) NOT NULL,
 state VARCHAR(100) NOT NULL,
 country VARCHAR(100) NOT NULL,
-userID INT NOT NULL,
+userID INT,
 CONSTRAINT pk_address PRIMARY KEY (addressID),
 CONSTRAINT fk_address_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
 );
