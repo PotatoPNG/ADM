@@ -36,12 +36,12 @@ Compensation ✅
 CompensationItem ✅
 
 -- Insert statement --
-SystemAdmin
-SystemUser
-Address
-Restaurant
+SystemAdmin✅
+SystemUser✅
+Address✅
+Restaurant✅
 Application ✅
-RestaurantUser
+RestaurantUser✅
 Menu✅
 MenuItem ✅
 MultiMenuItem✅
