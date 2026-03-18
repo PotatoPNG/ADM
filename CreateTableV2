@@ -152,12 +152,83 @@ CREATE TABLE orderItem (
 -- subscription
 
 -- DriverTier
+CREATE TABLE driverTier(
+  tierID NUMBER NOT NULL,
+  comPerOrder NUMBER (10,2)  NOT NULL,
+  comPerFastOrder NUMBER (10,2) NOT NULL,
+  comPerKM NUMBER (10,2)  NOT NULL,
+  orderBonus NUMBER (10,2)  NOT NULL,
+  limitPerHour NUMBER NOT NULL,
+  createdBy NUMBER NOT NULL, //adminID
+  CONSTRAINT pk_driverTier PRIMARY KEY(tierID),
+  CONSTRAINT fk_driverTier_createdBy FOREIGN KEY (createdBy) REFERENCES systemAdmin (adminID)
+  CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerOrder >= 0),
+  CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerFastOrder >= 0),
+  CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerKM >= 0),
+  CONSTRAINT chk_comPerOrder_nonnegative CHECK (orderBonus >= 0),
+  CONSTRAINT chk_comPerOrder_nonnegative CHECK (limitPerHour >= 0)
+);
 
--- DeliveryTier
+-- DeliveryDriver
+CREATE TABLE deliveryDriver(
+  driverID NUMBER NOT NULL,
+  name VARCHAR2(255)  NOT NULL,
+  email VARCHAR2(255)  NOT NULL,
+  password VARCHAR2(255)  NOT NULL,
+  status VARCHAR2(255) NOT NULL,
+  gender VARCHAR2(255),
+  contactNo VARCHAR2(255)  NOT NULL,
+  dob DATE NOT NULL,
+  deliveryCompany VARCHAR2(255) NOT NULL,
+  point NUMBER NOT NULL,
+  basedIn VARCHAR2(255) NOT NULL, 
+  currentLocation NUMBER,  
+  tierID NUMBER NOT NULL,
+  CONSTRAINT pk_deliveryDriver PRIMARY KEY(driverID),
+  CONSTRAINT fk_deliveryDriver_currentLocation FOREIGN KEY(currentLocation) REFERENCES address(addressID)
+  CONSTRAINT fk_deliveryDriver_tierID FOREIGN KEY(tierID) REFERENCES driverTier(tierID),
+  CONSTRAINT chk_point_nonnegative CHECK (point >= 0)
+);
 
 -- DeliveryDriverKPI
+CREATE TABLE deliveryDriverKPI(
+  kpiID NUMBER NOT NULL,
+  point NUMBER NOT NULL,
+  acceptOrder NUMBER NOT NULL,
+  delayOrder NUMBER NOT NULL,
+  avgDeliveryTime NUMBER(10,2) NOT NULL,
+  avgRatings NUMBER(10,2) NOT NULL,
+  recordDate DATE NOT NULL,
+  driverID NUMBER NOT NULL,
+  CONSTRAINT pk_deliveryDriverKPI PRTIMARY KEY(kpiID),
+  CONSTRAINT fk_deliveryDriverKPI_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID)
+  CONSTRAINT chk_acceptOrder_nonnegative CHECK (acceptOrder >= 0);
+  CONSTRAINT chk_delayOrder_nonnegative CHECK (delayOrder >= 0);
+  CONSTRAINT chk_avgDeliveryTime_nonnegative CHECK (avgDeliveryTime >= 0);
+  CONSTRAINT chk_avgRatings_nonnegative CHECK (avgRatings >= 0);
+);
 
 -- DeliverySchedule
+CREATE TABLE deliverySchedule(
+  scheduleID NUMBER NOT NULL,
+  orderDate DATE NOT NULL,
+  expectTime TIME NOT NULL,
+  departTime TIME,
+  reachTime TIME,
+  commission NUMBER(10,2) NOT NULL,
+  distance NUMBER(10,2) NOT NULL,
+  status VARCHAR2(255) NOT NULL,
+  point VARHCAR2(255),
+  driverID NUMBER,//once created not assigned to any driver yet
+  departAddress NUMBER NOT NULL,
+  destinationAddress NUMBER NOT NULL,
+  CONSTRAINT pk_deliverySchedule PRTIMARY KEY(scheduleID),
+  CONSTRAINT fk_deliverySchedule_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID),
+  CONSTRAINT fk_deliverySchedule_departAddress FOREIGN KEY(departAddress) REFERENCES ADDRESS(addressID),
+  CONSTRAINT fk_deliverySchedule_destinationAddress FOREIGN KEY(destinationAddress) REFERENCES ADDRESS(addressID)
+  CONSTRAINT chk_commission_nonnegative CHECK (commission >= 0),
+  CONSTRAINT chk_distance_nonnegative CHECK (distance >= 0)
+);
 
 -- Rating
 
@@ -186,8 +257,36 @@ CREATE TABLE cancellationItem (
 );
 
 -- Compensation
+CREATE TABLE compensation(
+  compensationID NUMBER NOT NULL,
+  compensation VARCHAR2(255) NOT NULL,
+  totalRefundAmt NUMBER(10,2),
+  issuedDate DATE NOT NULL;
+  scheduleID NUMBER,
+  orderID NUMBER NOT NULL,
+  voucherID NUMBER,
+  CONSTRAINT pk_compensation PRTIMARY KEY(compensationID),
+  CONSTRAINT fk_compensation_scheduleID FOREIGN KEY(scheduleID) REFERENCES DELIVERYSCHEDULE(scheduleID),
+  CONSTRAINT fk_compensation_orderID FOREIGN KEY(orderID) REFERENCES ORDER(orderID),
+  CONSTRAINT fk_compensation_voucherID FOREIGN KEY(voucherID) REFERENCES VOUCHER(voucherID),
+  CONSTRAINT chk_totalRefundAmt_nonnegative CHECK (totalRefundAmt>=0)
+);
 
 -- CompensationItem
+CREATE TABLE compensationItem(
+  compensationID NUMBER NOT NULL,
+  orderItemID NUMBER NOT NULL,
+  quantity NUMBER NOT NULL,
+  unitPrice NUMBER(10,2) NOT NULL,
+  reason VARCHAR2(255) NOT NULL,
+  refundAmt NUMBER(10,2) NOT NULL,
+  CONSTRAINT pk_compensationItem PRTIMARY KEY(compensationID, orderItemID),
+  CONSTRAINT fk_compensationItem_compensationID FOREIGN KEY(compensationID) REFERENCES COMPENSATION(compensationID),
+  CONSTRAINT fk_compensationItem_orderItemID FOREIGN KEY(orderItemID) REFERENCES ORDERITEM(orderItemID)
+  CONSTRAINT chk_quantity_nonnegative CHECK(quantity >= 0),
+  CONSTRAINT chk_unitPrice_nonnegative CHECK(unitPrice >= 0),
+  CONSTRAINT chk_refundAmt_nonnegative CHECK(refundAmt >= 0)
+);
 
 
 
@@ -248,4 +347,43 @@ BEGIN
   :NEW.cancellationID := cancellation_seq.NEXTVAL;
 END;
 /
-
+/
+CREATE OR REPLACE TRIGGER driverTier_trg
+BEFORE INSERT ON driverTier
+FOR EACH ROW
+BEGIN
+  :NEW.tierID := driverTier_seq.NEXTVAL; //generate ID based on SEQUENCE's NEXTVAL generated unique number 
+END;
+/
+/
+CREATE OR REPLACE TRIGGER deliveryDriver_trg
+BEFORE INSERT ON deliveryDriver
+FOR EACH ROW
+BEGIN
+  :NEW.driverID := deliveryDriver_seq.NEXTVAL; 
+END;
+/
+/
+CREATE OR REPLACE TRIGGER deliveryDriverKPI_trg
+BEFORE INSERT ON deliveryDriverKPI
+FOR EACH ROW
+BEGIN
+  :NEW.kpiID := deliveryDriverKPI_seq.NEXTVAL; 
+END;
+/
+/
+CREATE OR REPLACE TRIGGER deliverySchedule_trg
+BEFORE INSERT ON deliverySchedule
+FOR EACH ROW
+BEGIN
+  :NEW.scheduleID := deliverySchedule_seq.NEXTVAL; 
+END;
+/
+/
+CREATE OR REPLACE TRIGGER compensation_trg
+BEFORE INSERT ON compensation
+FOR EACH ROW
+BEGIN
+  :NEW.compensationID := compensation_seq.NEXTVAL; 
+END;
+/
