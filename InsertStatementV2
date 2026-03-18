@@ -12,7 +12,6 @@ INSERT ALL
   INTO systemAdmin(email, password, status, department) VALUES ('nurul2.izzah@fooddelivery.com', 'Passw@rd', 1, 'Finance & Accounting')
   INTO systemAdmin(email, password, status, department) VALUES ('rajan2.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation')
   INTO systemAdmin(email, password, status, department) VALUES ('rajan3.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation')
-SELECT * FROM dual;
 
 -- System User
 
@@ -71,3 +70,6 @@ SELECT * FROM dual;
 -- Compensation
 
 -- CompensationItem
+
+
+SELECT * FROM dual;
