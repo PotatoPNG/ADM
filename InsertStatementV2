@@ -14,8 +14,10 @@ INSERT ALL
   INTO systemAdmin(email, password, status, department) VALUES ('rajan3.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation')
 
 -- System User
+  INTO systemUser() VALUES ()
 
 -- Address
+  INTO address() VALUES ()
 
 -- Restarant
 
