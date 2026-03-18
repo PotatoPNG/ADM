@@ -2,6 +2,12 @@
 CREATE SEQUENCE systemAdmin_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE systemUser_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE address_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE cart_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE cartItem_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE orders_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE orderItem_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE cancellation_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE cancellationItem_seq START WITH 1 INCREMENT BY 1;
 
 -- Table 
 CREATE TABLE systemAdmin (
@@ -60,13 +66,85 @@ CREATE TABLE address (
 
 -- Voucher User
 
--- Cart
-
--- CatItem
-
--- Order
-
--- OrderItem
+CREATE TABLE cart (
+  cartID NUMBER NOU NULL,
+  createdAt TIMESTAMP NOT NULL,
+  updatedAt TIMESTAMP NOT NULL,
+  userID NUMBER NOT NULL,
+  CONSTRAINT pk_cart PRIMARY KEY (cartID),
+  CONSTRAINT fk_cart_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
+  CONSTRAINT chk_cart_dates_valid CHECK (updatedAt >= createdAt)
+);
+CREATE TABLE cartItem (
+  cartItemID NUMBER NOT NULL,
+  quantity NUMBER NOT NULL,
+  remark VARCHAR2(255),
+  size VARCHAR2(100),
+  sweetness VARCHAR2(100),
+  spiceLevel VARCHAR2(100),
+  drinkOpt VARCHAR2(100),
+  cartID NUMBER NOT NULL,
+  menuItemID NUMBER NOT NULL,
+  CONSTRAINT pk_cartItem PRIMARY KEY (cartItemID),
+  CONSTRAINT fk_cartItem_cart FOREIGN KEY (cartID) REFERENCES cart(cartID),
+  CONSTRAINT fk_cartItem_menuItem FOREIGN KEY (menuItemID) REFERENCES menuItem(menuItemID),
+  CONSTRAINT chk_cartItem_quantity_positive CHECK (quantity > 0)
+);
+CREATE TABLE orders (
+    orderID NUMBER NOT NULL,
+    orderAt TIMESTAMP NOT NULL,
+    preparedTime TIMESTAMP,
+    orderStatus VARCHAR2(20) NOT NULL,
+    subtotalAmount NUMBER(10,2) NOT NULL,
+    deductAmt NUMBER(10,2),
+    deductRate NUMBER(5,2),
+    totalAmount NUMBER(10,2) NOT NULL,
+    tips NUMBER(10,2),
+    pointEarned NUMBER,
+    collectionMethod VARCHAR2(100),
+    deliveryCompany VARCHAR2(100),
+    deliveryMethod VARCHAR2(100),
+    deliveryFee NUMBER(10,2),
+    userID NUMBER NOT NULL,
+    deliveryAddress NUMBER NOT NULL,
+    CONSTRAINT pk_customerOrder PRIMARY KEY (orderID),
+    CONSTRAINT fk_customerOrder_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
+    CONSTRAINT fk_customerAddress FOREIGN KEY (deliveryAddress) REFERENCES address(addressID),
+    CONSTRAINT chk_subtotal_nonnegative CHECK (subtotalAmount >= 0),
+    CONSTRAINT chk_deductAmt_nonnegative CHECK (deductAmt >= 0),
+    CONSTRAINT chk_deductRate_range CHECK (deductRate BETWEEN 0 AND 100),
+    CONSTRAINT chk_totalAmount_nonnegative CHECK (totalAmount >= 0),
+    CONSTRAINT chk_tips_nonnegative CHECK (tips >= 0),
+    CONSTRAINT chk_points_nonnegative CHECK (pointEarned >= 0),
+    CONSTRAINT chk_deliveryFee_nonnegative CHECK (deliveryFee >= 0),
+    CONSTRAINT chk_orderStatus_valid CHECK (orderStatus IN ('Pending','Preparing','Prepared','Completed','Cancelled'))
+);
+CREATE TABLE orderItem (
+    orderItemID NUMBER NOT NULL,
+    quantity NUMBER NOT NULL,
+    remark VARCHAR2(255),
+    size VARCHAR2(20),
+    sweetness VARCHAR2(20),
+    spiceLevel VARCHAR2(20),
+    drinkOpt VARCHAR2(50),
+    unitPrice NUMBER(10,2) NOT NULL,
+    subtotal NUMBER(10,2) NOT NULL,
+    discountPerItem NUMBER(10,2),
+    totalDiscount NUMBER(10,2),
+    total NUMBER(10,2) NOT NULL,
+    orderID NUMBER NOT NULL,
+    menuItemID NUMBER NOT NULL,
+    CONSTRAINT pk_orderItem PRIMARY KEY (orderItemID),
+    CONSTRAINT fk_orderItem_order FOREIGN KEY (orderID) REFERENCES orders(orderID),
+    CONSTRAINT fk_orderItem_menuItem FOREIGN KEY (menuItemID) REFERENCES menuItem(menuItemID),
+    CONSTRAINT chk_quantity_positive CHECK (quantity > 0),
+    CONSTRAINT chk_unitPrice_nonnegative CHECK (unitPrice >= 0),
+    CONSTRAINT chk_subtotal_nonnegative CHECK (subtotal >= 0),
+    CONSTRAINT chk_total_nonnegative CHECK (total >= 0),
+    CONSTRAINT chk_discountPerItem_nonnegative CHECK (discountPerItem >= 0),
+    CONSTRAINT chk_totalDiscount_nonnegative CHECK (totalDiscount >= 0),
+    CONSTRAINT chk_discount_not_exceed_subtotal CHECK (totalDiscount <= subtotal)
+);
 
 -- Payment
 
@@ -84,9 +162,29 @@ CREATE TABLE address (
 
 -- Rating
 
--- Cancellation
-
--- CancellationItem
+CREATE TABLE cancellation (
+    cancellationID NUMBER NOT NULL,
+    totalRefundAmount NUMBER(10,2) NOT NULL,
+    cancelAt TIMESTAMP NOT NULL,
+    orderID NUMBER NOT NULL,
+    approvedBy NUMBER,
+    status VARCHAR2(20) NOT NULL,
+    CONSTRAINT pk_cancellation PRIMARY KEY (cancellationID),
+    CONSTRAINT fk_cancellation_order FOREIGN KEY (orderID) REFERENCES orders(orderID),
+    CONSTRAINT fk_cancellation_admin FOREIGN KEY (approvedBy) REFERENCES systemAdmin(adminID),
+    CONSTRAINT chk_refund_nonnegative CHECK (totalRefundAmount >= 0),
+    CONSTRAINT chk_cancellation_status CHECK (status IN ('Pending','Approved','Rejected'))
+);
+CREATE TABLE cancellationItem (
+    cancellationID NUMBER NOT NULL,
+    orderItemID NUMBER NOT NULL,
+    reason VARCHAR2(255),
+    refundAmt NUMBER(10,2) NOT NULL,
+    CONSTRAINT pk_cancellationItem PRIMARY KEY (cancellationID, orderItemID),
+    CONSTRAINT fk_cancellationItem_cancellation FOREIGN KEY (cancellationID) REFERENCES cancellation(cancellationID),
+    CONSTRAINT fk_cancellationItem_orderItem FOREIGN KEY (orderItemID) REFERENCES orderItem(orderItemID),
+    CONSTRAINT chk_refundAmt_nonnegative CHECK (refundAmt >= 0)
+);
 
 -- Compensation
 
@@ -114,5 +212,47 @@ BEFORE INSERT ON address
 FOR EACH ROW
 BEGIN
   :NEW.addressID := address_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER cart_trg
+BEFORE INSERT ON cart
+FOR EACH ROW
+BEGIN
+  :NEW.cartID := cart_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER cartItem_trg
+BEFORE INSERT ON cartItem
+FOR EACH ROW
+BEGIN
+  :NEW.cartItemID := cartItem_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER orders_trg
+BEFORE INSERT ON orders
+FOR EACH ROW
+BEGIN
+  :NEW.orderID := orders_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER orderItem_trg
+BEFORE INSERT ON orderItem
+FOR EACH ROW
+BEGIN
+  :NEW.orderItemID := orderItem_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER cancellation_trg
+BEFORE INSERT ON cancellation
+FOR EACH ROW
+BEGIN
+  :NEW.cancellationID := cancellation_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER cancellationItem_trg
+BEFORE INSERT ON cancellationItem
+FOR EACH ROW
+BEGIN
+  :NEW.cancellationItemID := cancellationItem_seq.NEXTVAL;
 END;
 /
