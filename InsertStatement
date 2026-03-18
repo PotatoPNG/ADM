@@ -11681,17 +11681,27 @@ INSERT INTO `voucherUser` (`serialCode`, `status`, `voucherID`, `userID`, `appli
     ('W2KP-5LXM-8RQ4-Y5AW', 'Unredeemed', 13, 3, NULL);
 
 INSERT INTO systemAdmin(email, password, status, department) VALUES
-('azman.hashim@fooddelivery.com', 'Passw@rd', TRUE, 'Operations'),
-('jennifer.tan@fooddelivery.com', 'Passw@rd', TRUE, 'Customer Service'),
-('faiz.razak@fooddelivery.com', 'Passw@rd', TRUE, 'Vendor Management'),
-('nurul.izzah@fooddelivery.com', 'Passw@rd', TRUE, 'Finance & Accounting'),
-('rajan.krishnasamy@fooddelivery.com', 'Passw@rd', TRUE, 'Technology & Innovation'),
-('azman2.hashim@fooddelivery.com', 'Passw@rd', TRUE, 'Operations'),
-('jennifer2.tan@fooddelivery.com', 'Passw@rd', TRUE, 'Customer Service'),
-('faiz2.razak@fooddelivery.com', 'Passw@rd', TRUE, 'Vendor Management'),
-('nurul2.izzah@fooddelivery.com', 'Passw@rd', TRUE, 'Finance & Accounting'),
-('rajan2.krishnasamy@fooddelivery.com', 'Passw@rd', TRUE, 'Technology & Innovation'),
-('rajan3.krishnasamy@fooddelivery.com', 'Passw@rd', TRUE, 'Technology & Innovation');
+('azman.hashim@fooddelivery.com', 'Passw@rd', 1, 'Operations');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('jennifer.tan@fooddelivery.com', 'Passw@rd', 1, 'Customer Service');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('faiz.razak@fooddelivery.com', 'Passw@rd', 1, 'Vendor Management');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('nurul.izzah@fooddelivery.com', 'Passw@rd', 1, 'Finance & Accounting');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('rajan.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('azman2.hashim@fooddelivery.com', 'Passw@rd', 1, 'Operations');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('jennifer2.tan@fooddelivery.com', 'Passw@rd', 1, 'Customer Service');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('faiz2.razak@fooddelivery.com', 'Passw@rd', 1, 'Vendor Management');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('nurul2.izzah@fooddelivery.com', 'Passw@rd', 1, 'Finance & Accounting');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('rajan2.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation');
+INSERT INTO systemAdmin(email, password, status, department) VALUES
+('rajan3.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation');
 
 INSERT INTO systemUser (name, email, password, status, gender, contactNo, DOB, memberStatus, memberPoint) VALUES
 ('Ahmad Bin Abdullah', 'ahmad.abdullah@email.com', 'Passw@rd', TRUE, 'Male', '012-3456789', '1990-05-15', FALSE, 1250),
