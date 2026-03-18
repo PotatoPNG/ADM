@@ -7,29 +7,29 @@
 SystemAdmin ✅
 SystemUser ✅
 Address ✅
-Restaurant ✅
-Application ✅
-RestaurantUser ✅
-Menu ✅
-MenuItem ✅
-MultiMenuItem ✅
-Campaign ✅
-ParticipatedRestaurant ✅
-Voucher ✅
-CampaignVoucher ✅
-VoucherUser ✅
+Restaurant 
+Application 
+RestaurantUser 
+Menu 
+MenuItem 
+MultiMenuItem 
+Campaign 
+ParticipatedRestaurant 
+Voucher 
+CampaignVoucher 
+VoucherUser 
 Cart ✅
 CartItem ✅
 Order ✅
 OrderItem ✅
-Payment ✅
+Payment 
 MembershipType
 Subscription
 DeliveryTier ✅
 DeliveryDriver ✅
 DeliveryDriverKPI ✅
 DeliverySchedule ✅
-Ratings ✅
+Ratings 
 Cancellation ✅
 CancellationItem ✅
 Compensation ✅
@@ -37,33 +37,33 @@ CompensationItem ✅
 
 -- Insert statement --
 SystemAdmin✅
-SystemUser✅
-Address✅
-Restaurant✅
-Application ✅
-RestaurantUser✅
-Menu✅
-MenuItem ✅
-MultiMenuItem✅
-Campaign ✅
-ParticipatedRestaurant✅
-Voucher✅
-CampaignVoucher✅
-VoucherUser✅
-Cart ✅
-CartItem ✅
-Order ✅
-OrderItem ✅
-Payment ✅
+SystemUser
+Address
+Restaurant
+Application 
+RestaurantUser
+Menu
+MenuItem 
+MultiMenuItem
+Campaign 
+ParticipatedRestaurant
+Voucher
+CampaignVoucher
+VoucherUser
+Cart 
+CartItem 
+Order 
+OrderItem 
+Payment 
 MembershipType
 Subscription
-DeliveryTier ✅
+DriverTier ✅
 DeliveryDriver ✅
 DeliveryDriverKPI ✅
 DeliverySchedule ✅
-Ratings ✅
-Cancellation ✅
-CancellationItem ✅
+Ratings 
+Cancellation 
+CancellationItem 
 Compensation ✅
 CompensationItem ✅
 
