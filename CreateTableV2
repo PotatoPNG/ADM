@@ -7,7 +7,6 @@ CREATE SEQUENCE cartItem_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE orders_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE orderItem_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE cancellation_seq START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE cancellationItem_seq START WITH 1 INCREMENT BY 1;
 
 -- Table 
 CREATE TABLE systemAdmin (
@@ -249,10 +248,4 @@ BEGIN
   :NEW.cancellationID := cancellation_seq.NEXTVAL;
 END;
 /
-CREATE OR REPLACE TRIGGER cancellationItem_trg
-BEFORE INSERT ON cancellationItem
-FOR EACH ROW
-BEGIN
-  :NEW.cancellationItemID := cancellationItem_seq.NEXTVAL;
-END;
-/
+
