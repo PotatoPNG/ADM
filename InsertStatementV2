@@ -1,0 +1,19 @@
+SET DEFINE OFF;
+
+TRUNCATE TABLE systemAdmin;
+DROP SEQUENCE systemAdmin_seq;
+CREATE SEQUENCE systemAdmin_seq START WITH 1 INCREMENT BY 1;
+
+INSERT ALL
+  INTO systemAdmin(email, password, status, department) VALUES ('azman.hashim@fooddelivery.com', 'Passw@rd', 1, 'Operations')
+  INTO systemAdmin(email, password, status, department) VALUES ('jennifer.tan@fooddelivery.com', 'Passw@rd', 1, 'Customer Service')
+  INTO systemAdmin(email, password, status, department) VALUES ('faiz.razak@fooddelivery.com', 'Passw@rd', 1, 'Vendor Management')
+  INTO systemAdmin(email, password, status, department) VALUES ('nurul.izzah@fooddelivery.com', 'Passw@rd', 1, 'Finance & Accounting')
+  INTO systemAdmin(email, password, status, department) VALUES ('rajan.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation')
+  INTO systemAdmin(email, password, status, department) VALUES ('azman2.hashim@fooddelivery.com', 'Passw@rd', 1, 'Operations')
+  INTO systemAdmin(email, password, status, department) VALUES ('jennifer2.tan@fooddelivery.com', 'Passw@rd', 1, 'Customer Service')
+  INTO systemAdmin(email, password, status, department) VALUES ('faiz2.razak@fooddelivery.com', 'Passw@rd', 1, 'Vendor Management')
+  INTO systemAdmin(email, password, status, department) VALUES ('nurul2.izzah@fooddelivery.com', 'Passw@rd', 1, 'Finance & Accounting')
+  INTO systemAdmin(email, password, status, department) VALUES ('rajan2.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation')
+  INTO systemAdmin(email, password, status, department) VALUES ('rajan3.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation')
+SELECT * FROM dual;
