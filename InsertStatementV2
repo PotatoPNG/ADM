@@ -1,9 +1,5 @@
 SET DEFINE OFF;
 
-TRUNCATE TABLE systemAdmin;
-DROP SEQUENCE systemAdmin_seq;
-CREATE SEQUENCE systemAdmin_seq START WITH 1 INCREMENT BY 1;
-
 INSERT ALL
   INTO systemAdmin(email, password, status, department) VALUES ('azman.hashim@fooddelivery.com', 'Passw@rd', 1, 'Operations')
   INTO systemAdmin(email, password, status, department) VALUES ('jennifer.tan@fooddelivery.com', 'Passw@rd', 1, 'Customer Service')
@@ -17,3 +13,61 @@ INSERT ALL
   INTO systemAdmin(email, password, status, department) VALUES ('rajan2.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation')
   INTO systemAdmin(email, password, status, department) VALUES ('rajan3.krishnasamy@fooddelivery.com', 'Passw@rd', 1, 'Technology & Innovation')
 SELECT * FROM dual;
+
+-- System User
+
+-- Address
+
+-- Restarant
+
+-- Application
+
+-- RestaurantUser
+
+-- Menu
+
+-- MenuItem
+
+-- MultiMenuItem
+
+-- Campaign
+
+-- ParticipatedRestaurant
+
+-- Voucher
+
+-- campaign Voucher
+
+-- Voucher User
+
+-- Cart
+
+-- CatItem
+
+-- Order
+
+-- OrderItem
+
+-- Payment
+
+-- MembershipType
+
+-- subscription
+
+-- DriverTier
+
+-- DeliveryTier
+
+-- DeliveryDriverKPI
+
+-- DeliverySchedule
+
+-- Rating
+
+-- Cancellation
+
+-- CancellationItem
+
+-- Compensation
+
+-- CompensationItem
