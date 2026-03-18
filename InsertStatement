@@ -11681,11 +11681,17 @@ INSERT INTO `voucherUser` (`serialCode`, `status`, `voucherID`, `userID`, `appli
     ('W2KP-5LXM-8RQ4-Y5AW', 'Unredeemed', 13, 3, NULL);
 
 INSERT INTO systemAdmin(email, password, status, department) VALUES
-('azman.hashim@food delivery.com', 'Passw@rd', TRUE, 'Operations'),
-('jennifer.tan@food delivery.com', 'Passw@rd', TRUE, 'Customer Service'),
-('faiz.razak@food delivery.com', 'Passw@rd', TRUE, 'Vendor Management'),
-('nurul.izzah@food delivery.com', 'Passw@rd', TRUE, 'Finance & Accounting'),
-('rajan.krishnasamy@food delivery.com', 'Passw@rd', TRUE, 'Technology & Innovation');
+('azman.hashim@fooddelivery.com', 'Passw@rd', TRUE, 'Operations'),
+('jennifer.tan@fooddelivery.com', 'Passw@rd', TRUE, 'Customer Service'),
+('faiz.razak@fooddelivery.com', 'Passw@rd', TRUE, 'Vendor Management'),
+('nurul.izzah@fooddelivery.com', 'Passw@rd', TRUE, 'Finance & Accounting'),
+('rajan.krishnasamy@fooddelivery.com', 'Passw@rd', TRUE, 'Technology & Innovation'),
+('azman2.hashim@fooddelivery.com', 'Passw@rd', TRUE, 'Operations'),
+('jennifer2.tan@fooddelivery.com', 'Passw@rd', TRUE, 'Customer Service'),
+('faiz2.razak@fooddelivery.com', 'Passw@rd', TRUE, 'Vendor Management'),
+('nurul2.izzah@fooddelivery.com', 'Passw@rd', TRUE, 'Finance & Accounting'),
+('rajan2.krishnasamy@fooddelivery.com', 'Passw@rd', TRUE, 'Technology & Innovation'),
+('rajan3.krishnasamy@fooddelivery.com', 'Passw@rd', TRUE, 'Technology & Innovation');
 
 INSERT INTO systemUser (name, email, password, status, gender, contactNo, DOB, memberStatus, memberPoint) VALUES
 ('Ahmad Bin Abdullah', 'ahmad.abdullah@email.com', 'Passw@rd', TRUE, 'Male', '012-3456789', '1990-05-15', FALSE, 1250),
