@@ -1,0 +1,118 @@
+-- Sequence
+CREATE SEQUENCE systemAdmin_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE systemUser_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE address_seq START WITH 1 INCREMENT BY 1;
+
+-- Table 
+CREATE TABLE systemAdmin (
+  adminID NUMBER PRIMARY KEY,
+  email VARCHAR2(255) NOT NULL,
+  password VARCHAR2(255) NOT NULL,
+  status NUMBER(1) NOT NULL,
+  department VARCHAR2(100) NOT NULL
+);
+CREATE TABLE systemUser (
+  userID NUMBER PRIMARY KEY,
+  name VARCHAR2(100) NOT NULL,
+  email VARCHAR2(255) NOT NULL,
+  password VARCHAR2(255) NOT NULL,
+  status NUMBER(1) NOT NULL,
+  gender VARCHAR2(10) NOT NULL,
+  contactNo VARCHAR2(15) NOT NULL,
+  DOB DATE NOT NULL,
+  memberStatus NUMBER(1) NOT NULL,
+  memberPoint NUMBER NOT NULL,
+  CONSTRAINT chk_gender CHECK (gender IN ('Male','Female')),
+  CONSTRAINT chk_memberPoint_nonnegative CHECK (memberPoint >= 0)
+);
+CREATE TABLE address (
+  addressID NUMBER PRIMARY KEY,
+  unit VARCHAR2(50),
+  building VARCHAR2(100),
+  street VARCHAR2(200) NOT NULL,
+  city VARCHAR2(100) NOT NULL,
+  postcode VARCHAR2(10) NOT NULL,
+  state VARCHAR2(100) NOT NULL,
+  country VARCHAR2(100) NOT NULL,
+  userID NUMBER,
+  CONSTRAINT fk_address_user FOREIGN KEY (userID) REFERENCES systemUser(userID)
+);
+
+-- Restarant
+
+-- Application
+
+-- RestaurantUser
+
+-- Menu
+
+-- MenuItem
+
+-- MultiMenuItem
+
+-- Campaign
+
+-- ParticipatedRestaurant
+
+-- Voucher
+
+-- campaign Voucher
+
+-- Voucher User
+
+-- Cart
+
+-- CatItem
+
+-- Order
+
+-- OrderItem
+
+-- Payment
+
+-- MembershipType
+
+-- subscription
+
+-- DriverTier
+
+-- DeliveryTier
+
+-- DeliveryDriverKPI
+
+-- DeliverySchedule
+
+-- Rating
+
+-- Cancellation
+
+-- CancellationItem
+
+-- Compensation
+
+-- CompensationItem
+
+
+
+-- Trigger to auto-increment ID
+CREATE OR REPLACE TRIGGER systemAdmin_trg
+BEFORE INSERT ON systemAdmin
+FOR EACH ROW
+BEGIN
+  :NEW.adminID := systemAdmin_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER systemUser_trg
+BEFORE INSERT ON systemUser
+FOR EACH ROW
+BEGIN
+  :NEW.userID := systemUser_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER address_trg
+BEFORE INSERT ON address
+FOR EACH ROW
+BEGIN
+  :NEW.addressID := address_seq.NEXTVAL;
+END;
+/
