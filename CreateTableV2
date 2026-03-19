@@ -355,6 +355,13 @@ BEGIN
   :NEW.userID := systemUser_seq.NEXTVAL;
 END;
 /
+CREATE OR REPLACE TRIGGER restaurant_trg
+BEFORE INSERT ON restaurant
+FOR EACH ROW
+BEGIN
+    :NEW.restaurantID := restaurant_seq.NEXTVAL;
+END;
+/
 CREATE OR REPLACE TRIGGER address_trg
 BEFORE INSERT ON address
 FOR EACH ROW
@@ -395,6 +402,20 @@ BEFORE INSERT ON cancellation
 FOR EACH ROW
 BEGIN
   :NEW.cancellationID := cancellation_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER membershipType_trg
+BEFORE INSERT ON membershipType
+FOR EACH ROW
+BEGIN
+    :NEW.typeID := membershipType_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER subscription_trg
+BEFORE INSERT ON subscription
+FOR EACH ROW
+BEGIN
+    :NEW.subscriptionID := subscription_seq.NEXTVAL;
 END;
 /
 /
