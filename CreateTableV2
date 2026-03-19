@@ -42,12 +42,33 @@ CREATE TABLE address (
   userID NUMBER,
   CONSTRAINT fk_address_user FOREIGN KEY (userID) REFERENCES systemUser(userID)
 );
-
--- Restarant
+CREATE TABLE restaurant (
+restaurantID NUMBER PRIMARY KEY,
+restaurantName VARCHAR2(200) NOT NULL,
+cuisineType VARCHAR2(100) NOT NULL,
+serviceStyle VARCHAR2(100) NOT NULL,
+openingHours TIMESTAMP NOT NULL,
+closingHours TIMESTAMP NOT NULL,
+serviceTax NUMBER(5,2) NOT NULL,
+halal NUMBER(1) NOT NULL,
+availability NUMBER(1) NOT NULL,
+addressID NUMBER NOT NULL,
+CONSTRAINT fk_restaurant_address FOREIGN KEY (addressID) REFERENCES address(addressID),
+CONSTRAINT chk_restaurant_hours CHECK (closingHours > openingHours),
+CONSTRAINT chk_serviceTax_range CHECK (serviceTax >= 0 AND serviceTax <= 100),
+);
 
 -- Application
 
--- RestaurantUser
+
+CREATE TABLE restaurantUser (
+userID NUMBER NOT NULL,
+restaurantID NUMBER NOT NULL,
+accessLevel NUMBER NOT NULL,
+CONSTRAINT pk_restaurantUser PRIMARY KEY (userID, restaurantID),
+CONSTRAINT fk_restaurantUser_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
+CONSTRAINT fk_restaurantUser_restaurant FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
+);
 
 -- Menu
 
@@ -147,9 +168,38 @@ CREATE TABLE orderItem (
 
 -- Payment
 
--- MembershipType
 
--- subscription
+CREATE TABLE membershipType (
+typeID NUMBER PRIMARY KEY,
+type VARCHAR2(50) NOT NULL,
+description VARCHAR2(255) NOT NULL,
+charges NUMBER(10,2) NOT NULL,
+coinRate NUMBER(5,2) NOT NULL,
+discountRate NUMBER(5,2) NOT NULL,
+birthCoin NUMBER NOT NULL,
+birthDiscount NUMBER(5,2) NOT NULL,
+deliveryPriority NUMBER NOT NULL,
+createdBy NUMBER NOT NULL,
+CONSTRAINT fk_membershipType_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
+CONSTRAINT chk_charges_positive CHECK (charges > 0),
+CONSTRAINT chk_coinRate_positive CHECK (coinRate >= 0),
+CONSTRAINT chk_discountRate_range CHECK (discountRate BETWEEN 0 AND 100),
+CONSTRAINT chk_birthCoin_positive CHECK (birthCoin >= 0),
+CONSTRAINT chk_birthDiscount_range CHECK (birthDiscount BETWEEN 0 AND 100),
+);
+CREATE TABLE subscription (
+subscriptionID NUMBER PRIMARY KEY,
+subscriptionDate DATE NOT NULL,
+expiration DATE NOT NULL,
+status VARCHAR2(20) NOT NULL,
+userID NUMBER NOT NULL,
+typeID NUMBER NOT NULL,
+paymentID NUMBER NOT NULL,
+CONSTRAINT fk_subscription_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
+CONSTRAINT fk_subscription_membershipType FOREIGN KEY (typeID) REFERENCES membershipType(typeID),
+CONSTRAINT fk_subscription_payment FOREIGN KEY (paymentID) REFERENCES payment(paymentID),
+CONSTRAINT chk_subscription_dates CHECK (expiration >= subscriptionDate),
+);
 
 -- DriverTier
 CREATE TABLE driverTier(
