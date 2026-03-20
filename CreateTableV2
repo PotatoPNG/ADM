@@ -335,7 +335,7 @@ CREATE TABLE driverTier(
   comPerKM NUMBER (10,2)  NOT NULL,
   orderBonus NUMBER (10,2)  NOT NULL,
   limitPerHour NUMBER NOT NULL,
-  createdBy NUMBER NOT NULL, //adminID
+  createdBy NUMBER NOT NULL, 
   CONSTRAINT pk_driverTier PRIMARY KEY(tierID),
   CONSTRAINT fk_driverTier_createdBy FOREIGN KEY (createdBy) REFERENCES systemAdmin (adminID)
   CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerOrder >= 0),
@@ -395,7 +395,7 @@ CREATE TABLE deliverySchedule(
   distance NUMBER(10,2) NOT NULL,
   status VARCHAR2(255) NOT NULL,
   point VARCHAR2(255),
-  driverID NUMBER,//once created not assigned to any driver yet
+  driverID NUMBER,
   departAddress NUMBER NOT NULL,
   destinationAddress NUMBER NOT NULL,
   CONSTRAINT pk_deliverySchedule PRIMARY KEY(scheduleID),
@@ -561,7 +561,7 @@ CREATE OR REPLACE TRIGGER driverTier_trg
 BEFORE INSERT ON driverTier
 FOR EACH ROW
 BEGIN
-  :NEW.tierID := driverTier_seq.NEXTVAL; //generate ID based on SEQUENCE's NEXTVAL generated unique number 
+  :NEW.tierID := driverTier_seq.NEXTVAL; 
 END;
 /
 CREATE OR REPLACE TRIGGER deliveryDriver_trg
