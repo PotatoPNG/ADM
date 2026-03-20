@@ -10288,17 +10288,17 @@ INTO orders (orderAt,preparedTime,orderStatus,subtotalAmount,deductAmt,decuctRat
 -- Payment
 
 -- MembershipType
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Silver', 'Entry-level VIP membership with basic privileges', 8.9, 1, 30, 1)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Gold', 'Standard VIP membership with enhanced benefits', 14.9, 1, 80, 2)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Platinum', 'Mid-tier VIP membership with premium rewards', 22.9, 1, 150, 3)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Diamond', 'High-tier VIP membership with exclusive perks', 32.9, 1, 300, 4)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Executive', 'Top-tier VIP membership with ultimate privileges', 44.9, 1, 500, 5)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Signature', 'Premium membership with signature benefits and exclusive events access', 59.9, 6.5, 750, 6)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Infinity', 'Ultimate membership with unlimited perks and concierge service', 79.9, 8, 1000, 7)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Student', 'Affordable membership designed for students with basic benefits', 4.9, 1, 20, 8)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Senior', 'Special membership for seniors with healthcare and wellness perks', 6.9, 1.1, 25, 9)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Family', 'Family package covering up to 4 members with shared benefits', 34.9, 2.8, 200, 10)
-  INTO membershipType (type, description, charges, pointRate, birthCoin, createdBy) VALUES ('VIP Royale', 'Royal treatment membership with VIP concierge and 5-star experiences', 49.9, 4.5, 400, 4)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Silver', 'Entry-level VIP membership with basic privileges', 8.9, 1, 30, 1)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Gold', 'Standard VIP membership with enhanced benefits', 14.9, 1, 80, 2)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Platinum', 'Mid-tier VIP membership with premium rewards', 22.9, 1, 150, 3)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Diamond', 'High-tier VIP membership with exclusive perks', 32.9, 1, 300, 4)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Executive', 'Top-tier VIP membership with ultimate privileges', 44.9, 1, 500, 5)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Signature', 'Premium membership with signature benefits and exclusive events access', 59.9, 6.5, 750, 6)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Infinity', 'Ultimate membership with unlimited perks and concierge service', 79.9, 8, 1000, 7)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Student', 'Affordable membership designed for students with basic benefits', 4.9, 1, 20, 8)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Senior', 'Special membership for seniors with healthcare and wellness perks', 6.9, 1.1, 25, 9)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Family', 'Family package covering up to 4 members with shared benefits', 34.9, 2.8, 200, 10)
+  INTO membershipType (type, description, charges, pointRate, birthPoint, createdBy) VALUES ('VIP Royale', 'Royal treatment membership with VIP concierge and 5-star experiences', 49.9, 4.5, 400, 4)
 
 -- subscription
   INTO subscription (subscriptionDate, expiration, birthPointRedemption, status, userID, typeID, paymentID) VALUES (TO_DATE('2024-01-02', 'YYYY-MM-DD'), TO_DATE('2024-02-02', 'YYYY-MM-DD'), 1, 'Unactive', 140, 2, 665)
