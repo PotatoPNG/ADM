@@ -326,8 +326,8 @@ birthPoint NUMBER NOT NULL,
 createdBy NUMBER NOT NULL,
 CONSTRAINT fk_membershipType_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
 CONSTRAINT chk_charges_positive CHECK (charges > 0),
-CONSTRAINT chk_coinRate_positive CHECK (coinRate >= 0),
-CONSTRAINT chk_birthCoin_positive CHECK (birthCoin >= 0)
+CONSTRAINT chk_coinRate_positive CHECK (pointRate >= 0),
+CONSTRAINT chk_birthCoin_positive CHECK (birthPoint >= 0)
 );
 CREATE TABLE subscription (
 subscriptionID NUMBER PRIMARY KEY,
