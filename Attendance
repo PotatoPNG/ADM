@@ -8,11 +8,11 @@ SystemAdmin ✅
 SystemUser ✅
 Address ✅
 Restaurant ✅
-Application 
+Application ✅
 RestaurantUser ✅
-Menu 
-MenuItem 
-MultiMenuItem 
+Menu ✅
+MenuItem ✅
+MultiMenuItem ✅
 Campaign 
 ParticipatedRestaurant 
 Voucher 
