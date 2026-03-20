@@ -488,7 +488,7 @@ CREATE TABLE compensationItem(
   refundAmt NUMBER(10,2) NOT NULL,
   CONSTRAINT pk_compensationItem PRIMARY KEY(compensationID, orderItemID),
   CONSTRAINT fk_compensationItem_compensationID FOREIGN KEY(compensationID) REFERENCES COMPENSATION(compensationID),
-  CONSTRAINT fk_compensationItem_orderItemID FOREIGN KEY(orderItemID) REFERENCES ORDERITEM(orderItemID)
+  CONSTRAINT fk_compensationItem_orderItemID FOREIGN KEY(orderItemID) REFERENCES ORDERITEM(orderItemID),
   CONSTRAINT chk_quantity_nonnegative CHECK(quantity >= 0),
   CONSTRAINT chk_unitPrice_nonnegative CHECK(unitPrice >= 0),
   CONSTRAINT chk_refundAmt_nonnegative CHECK(refundAmt >= 0)
