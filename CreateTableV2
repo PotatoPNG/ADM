@@ -164,9 +164,10 @@ CONSTRAINT fk_participatedRestaurant_campaign FOREIGN KEY (campaignID) REFERENCE
 -- Voucher
 CREATE TABLE voucher(
 voucherID NUMBER PRIMARY KEY,
-name VARCHAR2(100) NOT NULL,
-description VARCHAR2(100) NOT NULL,
-type VARCHAR2(30) NOT NULL,
+name VARCHAR(100) NOT NULL,
+description VARCHAR(100) NOT NULL,
+type VARCHAR(30) NOT NULL,
+pointToRedeem NUMBER,
 creationDate DATE NOT NULL,
 validPeriod NUMBER(10,2) NOT NULL,
 minSpendAmt NUMBER(10,2),
