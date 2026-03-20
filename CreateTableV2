@@ -327,9 +327,9 @@ CREATE TABLE deliveryDriverKPI(
 CREATE TABLE deliverySchedule(
   scheduleID NUMBER NOT NULL,
   orderDate DATE NOT NULL,
-  expectTime TIMESTAMP NOT NULL,
-  departTime TIMESTAMP,
-  reachTime TIMESTAMP,
+  expectTime DATE NOT NULL,
+  departTime DATE,
+  reachTime DATE,
   commission NUMBER(10,2) NOT NULL,
   distance NUMBER(10,2) NOT NULL,
   status VARCHAR2(255) NOT NULL,
