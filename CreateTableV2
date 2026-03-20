@@ -361,7 +361,7 @@ CREATE TABLE deliveryDriver(
   currentLocation NUMBER,  
   tierID NUMBER NOT NULL,
   CONSTRAINT pk_deliveryDriver PRIMARY KEY(driverID),
-  CONSTRAINT fk_deliveryDriver_currentLocation FOREIGN KEY(currentLocation) REFERENCES address(addressID)
+  CONSTRAINT fk_deliveryDriver_currentLocation FOREIGN KEY(currentLocation) REFERENCES address(addressID),
   CONSTRAINT fk_deliveryDriver_tierID FOREIGN KEY(tierID) REFERENCES driverTier(tierID),
   CONSTRAINT chk_point_nonnegative CHECK (point >= 0)
 );
