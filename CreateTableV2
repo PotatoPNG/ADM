@@ -176,7 +176,6 @@ status NUMBER(1) NOT NULL,
 createdBy NUMBER NOT NULL,
 CONSTRAINT fk_voucher_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
 CONSTRAINT chk_type_valid CHECK (type IN ('Discount by rate','Cash Rebate','Free delivery')),
-CONSTRAINT chk_obtainMethod_valid CHECK (obtainMethod IN ('campaign','Compensation with Refund')),
 CONSTRAINT chk_validPeriod_nonnegative CHECK (validPeriod > 0)
 CONSTRAINT chk_deductRate_nonnegative_and_one CHECK (validPeriod > 0 AND validPeriod <1)
 CONSTRAINT chk_totalRedemptionCount_nonnegative CHECK (totalRedemptionCount > 0)
@@ -198,10 +197,12 @@ status varchar(30) NOT NULL,
 voucherID NUMBER NOT NULL,
 userID NUMBER NOT NULL,
 appliedOn NUMBER,
+obtainMethod VARCHAR(50) NOT NULL,
 CONSTRAINT pk_voucherUSer_voucher FOREIGN KEY (voucherID) REFERENCES voucher(voucherID),
 CONSTRAINT fk_voucherUSer_user FOREIGN KEY (userID) REFERENCES systemUSer(userID),
 CONSTRAINT fk_voucherUSer_order FOREIGN KEY (appliedOn) REFERENCES orders(orderID),
-CONSTRAINT chk_status_valid CHECK (status IN ('redeemed','Unredeemed'))
+CONSTRAINT chk_status_valid CHECK (status IN ('redeemed','Unredeemed')),
+CONSTRAINT chk_obtainMethod_valid CHECK (obtainMethod IN ('campaign','compensation', 'point Redemption'))
 );
 
 --pointredeempt
