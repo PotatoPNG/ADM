@@ -131,14 +131,75 @@ CREATE TABLE multiMenuItem (
 );
 
 -- Campaign
+CREATE TABLE campaign(
+campaignID NUMBER PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+description VARCHAR(100) NOT NULL,
+type VARCHAR(30),
+startDate DATE NOT NULL,
+validPeriod NUMBER NOT NULL,
+createdBy NUMBER NOT NULL,
+CONSTRAINT fk_campaign_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
+CONSTRAINT chk_type_valid CHECK (type IN ('voucher','membership point earning','cashback')),
+CONSTRAINT chk_validPeriod_nonnegative CHECK (validPeriod > 0)
+);
 
 -- ParticipatedRestaurant
+CREATE TABLE participatedRestaurant(
+campaignID NUMBER NOT NULL,
+restaurantID NUMBER NOT NULL,
+participateDate DATE NOT NULL,
+CONSTRAINT pk_participatedRestaurant PRIMARY KEY (campaignID, restaurantID),
+CONSTRAINT fk_participatedRestaurant_restaurant FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
+CONSTRAINT fk_participatedRestaurant_campaign FOREIGN KEY (campaignID) REFERENCES campaign(campaignID)
+);
 
 -- Voucher
+CREATE TABLE voucher(
+voucherID NUMBER PRIMARY KEY,
+name VARCHAR(100) NOT NULL,
+desc VARCHAR(100) NOT NULL,
+type VARCHAR(30) NOT NULL,
+creationDate DATE NOT NULL,
+validPeriod NUMBER(10,2) NOT NULL,
+minSpendAmt NUMBER(10,2),
+deductAmt NUMBER(10,2),
+deductRate NUMBER(10,2),
+totalRedemptionCount NUMBER NOT NULL,
+maxRedemption NUMBER, 
+status BOOLEAN NOT NULL,
+createdBy NUMBER NOT NULL,
+CONSTRAINT fk_voucher_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
+CONSTRAINT chk_type_valid CHECK (type IN ('Discount by rate','Cash Rebate','Free delivery')),
+CONSTRAINT chk_obtainMethod_valid CHECK (obtainMethod IN ('campaign','Compensation with Refund')),
+CONSTRAINT chk_validPeriod_nonnegative CHECK (validPeriod > 0)
+CONSTRAINT chk_deductRate_nonnegative_and_one CHECK (validPeriod > 0 AND validPeriod <1)
+CONSTRAINT chk_totalRedemptionCount_nonnegative CHECK (totalRedemptionCount > 0)
+);
 
 -- campaign Voucher
+CREATE TABLE campaignVoucher(
+campaignID NUMBER NOT NULL,
+voucherID NUMBER NOT NULL,
+CONSTRAINT pk_campaignVoucher PRIMARY KEY (campaignID, voucherID),
+CONSTRAINT fk_campaignVoucher_campaign FOREIGN KEY (campaignID) REFERENCES campaign(campaignID),
+CONSTRAINT fk_campaignVoucher_voucher FOREIGN KEY (voucherID) REFERENCES voucher(voucherID)
+);
 
 -- Voucher User
+CREATE TABLE voucherUser(
+serialCode VARCHAR(19) PRIMARY KEY,
+status varchar(30) NOT NULL,
+voucherID NUMBER NOT NULL,
+userID NUMBER NOT NULL,
+appliedOn NUMBER,
+CONSTRAINT pk_voucherUSer_voucher FOREIGN KEY (voucherID) REFERENCES voucher(voucherID),
+CONSTRAINT fk_voucherUSer_user FOREIGN KEY (userID) REFERENCES systemUSer(userID),
+CONSTRAINT fk_voucherUSer_order FOREIGN KEY (appliedOn) REFERENCES orders(orderID),
+CONSTRAINT chk_status_valid CHECK (status IN ('redeemed','Unredeemed'))
+);
+
+--pointredeempt
 
 CREATE TABLE cart (
   cartID NUMBER NOU NULL,
