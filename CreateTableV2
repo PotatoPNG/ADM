@@ -248,7 +248,7 @@ CREATE TABLE deliveryDriverKPI(
   avgRatings NUMBER(10,2) NOT NULL,
   recordDate DATE NOT NULL,
   driverID NUMBER NOT NULL,
-  CONSTRAINT pk_deliveryDriverKPI PRTIMARY KEY(kpiID),
+  CONSTRAINT pk_deliveryDriverKPI PRIMARY KEY(kpiID),
   CONSTRAINT fk_deliveryDriverKPI_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID)
   CONSTRAINT chk_acceptOrder_nonnegative CHECK (acceptOrder >= 0);
   CONSTRAINT chk_delayOrder_nonnegative CHECK (delayOrder >= 0);
@@ -260,9 +260,9 @@ CREATE TABLE deliveryDriverKPI(
 CREATE TABLE deliverySchedule(
   scheduleID NUMBER NOT NULL,
   orderDate DATE NOT NULL,
-  expectTime TIME NOT NULL,
-  departTime TIME,
-  reachTime TIME,
+  expectTime TIMESTAMP NOT NULL,
+  departTime TIMESTAMP,
+  reachTime TIMESTAMP,
   commission NUMBER(10,2) NOT NULL,
   distance NUMBER(10,2) NOT NULL,
   status VARCHAR2(255) NOT NULL,
@@ -270,7 +270,7 @@ CREATE TABLE deliverySchedule(
   driverID NUMBER,//once created not assigned to any driver yet
   departAddress NUMBER NOT NULL,
   destinationAddress NUMBER NOT NULL,
-  CONSTRAINT pk_deliverySchedule PRTIMARY KEY(scheduleID),
+  CONSTRAINT pk_deliverySchedule PRIMARY KEY(scheduleID),
   CONSTRAINT fk_deliverySchedule_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID),
   CONSTRAINT fk_deliverySchedule_departAddress FOREIGN KEY(departAddress) REFERENCES ADDRESS(addressID),
   CONSTRAINT fk_deliverySchedule_destinationAddress FOREIGN KEY(destinationAddress) REFERENCES ADDRESS(addressID)
