@@ -404,7 +404,7 @@ CREATE TABLE deliveryDriverKPI(
 -- DeliverySchedule
 CREATE TABLE deliverySchedule(
   scheduleID NUMBER NOT NULL,
-  orderDate DATE NOT NULL,
+  orderAt DATE NOT NULL,
   expectTime DATE NOT NULL,
   departTime DATE,
   reachTime DATE,
