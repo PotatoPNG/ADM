@@ -69,7 +69,6 @@ halal NUMBER(1) NOT NULL,
 availability NUMBER(1) NOT NULL,
 addressID NUMBER NOT NULL,
 CONSTRAINT fk_restaurant_address FOREIGN KEY (addressID) REFERENCES address(addressID),
-CONSTRAINT chk_restaurant_hours CHECK (closingHours > openingHours),
 CONSTRAINT chk_serviceTax_range CHECK (serviceTax >= 0 AND serviceTax <= 100)
 );
 
