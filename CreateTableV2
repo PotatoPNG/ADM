@@ -158,7 +158,7 @@ restaurantID NUMBER NOT NULL,
 participateDate DATE NOT NULL,
 CONSTRAINT pk_participatedRestaurant PRIMARY KEY (campaignID, restaurantID),
 CONSTRAINT fk_partRest_rest FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
-CONSTRAINT fk_participatedRestaurant_campaign FOREIGN KEY (campaignID) REFERENCES campaign(campaignID)
+CONSTRAINT fk_partRest_camp FOREIGN KEY (campaignID) REFERENCES campaign(campaignID)
 );
 
 -- Voucher
@@ -180,7 +180,7 @@ createdBy NUMBER NOT NULL,
 CONSTRAINT fk_voucher_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
 CONSTRAINT chk_voucher_type_valid CHECK (type IN ('Discount by rate','Cash Rebate','Free delivery')),
 CONSTRAINT chk_vch_validPeriod CHECK (validPeriod > 0),
-CONSTRAINT chk_deductRate_nonnegative_and_one CHECK (deductRate > 0 AND deductRate <1),
+CONSTRAINT chk_deductRate CHECK (deductRate > 0 AND deductRate <1),
 CONSTRAINT chk_totalRedemptionCount_nonnegative CHECK (totalRedemptionCount > 0)
 );
 
@@ -190,7 +190,7 @@ campaignID NUMBER NOT NULL,
 voucherID NUMBER NOT NULL,
 CONSTRAINT pk_campaignVoucher PRIMARY KEY (campaignID, voucherID),
 CONSTRAINT fk_campaignVoucher_campaign FOREIGN KEY (campaignID) REFERENCES campaign(campaignID),
-CONSTRAINT fk_campaignVoucher_voucher FOREIGN KEY (voucherID) REFERENCES voucher(voucherID)
+CONSTRAINT fk_cmpVch_voucher FOREIGN KEY (voucherID) REFERENCES voucher(voucherID)
 );
 
 -- Voucher User
@@ -201,7 +201,7 @@ voucherID NUMBER NOT NULL,
 userID NUMBER NOT NULL,
 appliedOn NUMBER,
 obtainMethod VARCHAR2(50) NOT NULL,
-CONSTRAINT fk_voucherUSer_voucher FOREIGN KEY (voucherID) REFERENCES voucher(voucherID),
+CONSTRAINT fk_vchUser_vch FOREIGN KEY (voucherID) REFERENCES voucher(voucherID),
 CONSTRAINT fk_voucherUSer_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
 CONSTRAINT fk_voucherUSer_order FOREIGN KEY (appliedOn) REFERENCES orders(orderID),
 CONSTRAINT chk_status_valid CHECK (status IN ('redeemed','unredeemed')),
@@ -216,7 +216,7 @@ point NUMBER NOT NULL,
 redeemDate DATE NOT NULL,
 CONSTRAINT pk_pointRedemption PRIMARY KEY (userID, voucherID),
 CONSTRAINT fk_pointRedeeem_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
-CONSTRAINT fk_pointRedeeem_voucher FOREIGN KEY (voucherID) REFERENCES voucher(voucherID)
+CONSTRAINT fk_pointRedeem_vch FOREIGN KEY (voucherID) REFERENCES voucher(voucherID)
 );
 
 CREATE TABLE cart (
@@ -294,7 +294,7 @@ CREATE TABLE orderItem (
     CONSTRAINT chk_unitPrice_nonnegative CHECK (unitPrice >= 0),
     CONSTRAINT chk_subtotal_nonnegative CHECK (subtotal >= 0),
     CONSTRAINT chk_total_nonnegative CHECK (total >= 0),
-    CONSTRAINT chk_discountPerItem_nonnegative CHECK (discountPerItem >= 0),
+    CONSTRAINT chk_discPerItem CHECK (discountPerItem >= 0),
     CONSTRAINT chk_totalDiscount_nonnegative CHECK (totalDiscount >= 0),
     CONSTRAINT chk_discount_not_exceed_subtotal CHECK (totalDiscount <= subtotal)
 );
@@ -419,7 +419,7 @@ CREATE TABLE deliverySchedule(
   CONSTRAINT pk_deliverySchedule PRIMARY KEY(scheduleID),
   CONSTRAINT fk_deliverySchedule_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID),
   CONSTRAINT fk_delSch_depart FOREIGN KEY(departAddress) REFERENCES ADDRESS(addressID),
-  CONSTRAINT fk_deliverySchedule_destinationAddress FOREIGN KEY(destinationAddress) REFERENCES ADDRESS(addressID),
+  CONSTRAINT fk_delSch_destAddr FOREIGN KEY(destinationAddress) REFERENCES ADDRESS(addressID),
   CONSTRAINT chk_commission_nonnegative CHECK (commission >= 0),
   CONSTRAINT chk_distance_nonnegative CHECK (distance >= 0)
 );
@@ -435,7 +435,7 @@ CREATE TABLE ratings (
   CONSTRAINT pk_ratings PRIMARY KEY (ratingsID),
   CONSTRAINT fk_ratings_createdBy FOREIGN KEY (createdBy) REFERENCES systemUser(userID),
   CONSTRAINT fk_ratings_orderID FOREIGN KEY (orderID) REFERENCES orders(orderID),
-  CONSTRAINT fk_ratings_scheduleID FOREIGN KEY (scheduleID) REFERENCES deliverySchedule(scheduleID),
+  CONSTRAINT fk_ratings_sch FOREIGN KEY (scheduleID) REFERENCES deliverySchedule(scheduleID),
   CONSTRAINT chk_ratings_ratinglevel CHECK (ratingLevel BETWEEN 1 AND 5)
 );
 
@@ -459,7 +459,7 @@ CREATE TABLE cancellationItem (
     refundAmt NUMBER(10,2) NOT NULL,
     CONSTRAINT pk_cancellationItem PRIMARY KEY (cancellationID, orderItemID),
     CONSTRAINT fk_cancItem_canc FOREIGN KEY (cancellationID) REFERENCES cancellation(cancellationID),
-    CONSTRAINT fk_cancellationItem_orderItem FOREIGN KEY (orderItemID) REFERENCES orderItem(orderItemID),
+    CONSTRAINT fk_cancItem_order FOREIGN KEY (orderItemID) REFERENCES orderItem(orderItemID),
     CONSTRAINT chk_refundAmt_nonnegative CHECK (refundAmt >= 0)
 );
 
@@ -473,7 +473,7 @@ CREATE TABLE compensation(
   orderID NUMBER NOT NULL,
   voucherID NUMBER,
   CONSTRAINT pk_compensation PRIMARY KEY(compensationID),
-  CONSTRAINT fk_compensation_scheduleID FOREIGN KEY(scheduleID) REFERENCES DELIVERYSCHEDULE(scheduleID),
+  CONSTRAINT fk_comp_sch FOREIGN KEY(scheduleID) REFERENCES DELIVERYSCHEDULE(scheduleID),
   CONSTRAINT fk_compensation_orderID FOREIGN KEY(orderID) REFERENCES ORDERS(orderID),
   CONSTRAINT fk_compensation_voucherID FOREIGN KEY(voucherID) REFERENCES VOUCHER(voucherID),
   CONSTRAINT chk_totalRefundAmt_nonnegative CHECK (totalRefundAmt>=0)
@@ -489,7 +489,7 @@ CREATE TABLE compensationItem(
   refundAmt NUMBER(10,2) NOT NULL,
   CONSTRAINT pk_compensationItem PRIMARY KEY(compensationID, orderItemID),
   CONSTRAINT fk_compItem_comp FOREIGN KEY(compensationID) REFERENCES COMPENSATION(compensationID),
-  CONSTRAINT fk_compensationItem_orderItemID FOREIGN KEY(orderItemID) REFERENCES ORDERITEM(orderItemID),
+  CONSTRAINT fk_compItem_order FOREIGN KEY(orderItemID) REFERENCES ORDERITEM(orderItemID),
   CONSTRAINT chk_quantity_nonnegative CHECK(quantity >= 0),
   CONSTRAINT chk_unitPrice_nonnegative CHECK(unitPrice >= 0),
   CONSTRAINT chk_refundAmt_nonnegative CHECK(refundAmt >= 0)
