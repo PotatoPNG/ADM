@@ -109,7 +109,7 @@ CREATE TABLE menuItem (
   name VARCHAR2(255) NOT NULL,
   price NUMBER(10,2) NOT NULL,
   calories NUMBER NOT NULL,
-  sizeOpt NUMBER(1) NOT NULL,
+  size NUMBER(1) NOT NULL,
   sweetness NUMBER(1) NOT NULL ,
   spiceLevel NUMBER(1) NOT NULL,
   drinkOpt NUMBER(1) NOT NULL,
