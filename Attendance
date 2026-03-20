@@ -50,9 +50,9 @@ ParticipatedRestaurant
 Voucher
 CampaignVoucher
 VoucherUser
-Cart 
-CartItem 
-Order 
+Cart ✅
+CartItem ✅ 
+Order ✅
 OrderItem 
 Payment 
 MembershipType
