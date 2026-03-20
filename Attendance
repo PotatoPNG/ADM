@@ -53,7 +53,7 @@ VoucherUser
 Cart ✅
 CartItem ✅ 
 Order ✅
-OrderItem 
+OrderItem ✅
 Payment 
 MembershipType
 Subscription
@@ -62,8 +62,8 @@ DeliveryDriver ✅
 DeliveryDriverKPI ✅
 DeliverySchedule ✅
 Ratings 
-Cancellation 
-CancellationItem 
+Cancellation ✅
+CancellationItem ✅
 Compensation ✅
 CompensationItem ✅
 
