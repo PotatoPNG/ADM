@@ -88,8 +88,8 @@ CONSTRAINT fk_restaurantUser_restaurant FOREIGN KEY (restaurantID) REFERENCES re
 
 CREATE TABLE cart (
   cartID NUMBER NOU NULL,
-  createdAt TIMESTAMP NOT NULL,
-  updatedAt TIMESTAMP NOT NULL,
+  createdAt DATE NOT NULL,
+  updatedAt DATE NOT NULL,
   userID NUMBER NOT NULL,
   CONSTRAINT pk_cart PRIMARY KEY (cartID),
   CONSTRAINT fk_cart_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
@@ -112,8 +112,8 @@ CREATE TABLE cartItem (
 );
 CREATE TABLE orders (
     orderID NUMBER NOT NULL,
-    orderAt TIMESTAMP NOT NULL,
-    preparedTime TIMESTAMP,
+    orderAt DATE NOT NULL,
+    preparedTime NUMBER,
     orderStatus VARCHAR2(20) NOT NULL,
     subtotalAmount NUMBER(10,2) NOT NULL,
     deductAmt NUMBER(10,2),
@@ -285,7 +285,7 @@ CREATE TABLE deliverySchedule(
 CREATE TABLE cancellation (
     cancellationID NUMBER NOT NULL,
     totalRefundAmount NUMBER(10,2) NOT NULL,
-    cancelAt TIMESTAMP NOT NULL,
+    cancelAt DATE NOT NULL,
     orderID NUMBER NOT NULL,
     approvedBy NUMBER,
     status VARCHAR2(20) NOT NULL,
