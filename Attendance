@@ -55,14 +55,14 @@ Cart ✅
 CartItem ✅ 
 Order ✅
 OrderItem ✅
-Payment 
+Payment ✅
 MembershipType
 Subscription
 DriverTier ✅
 DeliveryDriver ✅
 DeliveryDriverKPI ✅
 DeliverySchedule ✅
-Ratings 
+Ratings ✅
 Cancellation ✅
 CancellationItem ✅
 Compensation ✅
