@@ -34,7 +34,7 @@ CREATE TABLE systemUser (
   contactNo VARCHAR2(15) NOT NULL,
   DOB DATE NOT NULL,
   memberStatus NUMBER(1) NOT NULL,
-  memberPoint NUMBER NOT NULL,
+  memberPoint NUMBER(11,2) NOT NULL,
   CONSTRAINT chk_gender CHECK (gender IN ('Male','Female')),
   CONSTRAINT chk_memberPoint_nonnegative CHECK (memberPoint >= 0)
 );
