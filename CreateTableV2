@@ -208,7 +208,7 @@ CONSTRAINT chk_obtainMethod_valid CHECK (obtainMethod IN ('campaign','compensati
 --pointredeempt
 
 CREATE TABLE cart (
-  cartID NUMBER NOU NULL,
+  cartID NUMBER NOT NULL,
   createdAt DATE NOT NULL,
   updatedAt DATE NOT NULL,
   userID NUMBER NOT NULL,
