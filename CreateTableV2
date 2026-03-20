@@ -339,10 +339,10 @@ CREATE TABLE driverTier(
   CONSTRAINT pk_driverTier PRIMARY KEY(tierID),
   CONSTRAINT fk_driverTier_createdBy FOREIGN KEY (createdBy) REFERENCES systemAdmin (adminID)
   CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerOrder >= 0),
-  CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerFastOrder >= 0),
-  CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerKM >= 0),
-  CONSTRAINT chk_comPerOrder_nonnegative CHECK (orderBonus >= 0),
-  CONSTRAINT chk_comPerOrder_nonnegative CHECK (limitPerHour >= 0)
+  CONSTRAINT chk_comPerFastOrder_nonnegative CHECK (comPerFastOrder >= 0),
+  CONSTRAINT chk_comPerKM_nonnegative CHECK (comPerKM >= 0),
+  CONSTRAINT chk_orderBonus_nonnegative CHECK (orderBonus >= 0),
+  CONSTRAINT chk_limitPerHour_nonnegative CHECK (limitPerHour >= 0)
 );
 
 -- DeliveryDriver
