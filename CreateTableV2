@@ -460,7 +460,7 @@ CREATE TABLE cancellationItem (
     CONSTRAINT pk_cancellationItem PRIMARY KEY (cancellationID, orderItemID),
     CONSTRAINT fk_cancItem_canc FOREIGN KEY (cancellationID) REFERENCES cancellation(cancellationID),
     CONSTRAINT fk_cancItem_order FOREIGN KEY (orderItemID) REFERENCES orderItem(orderItemID),
-    CONSTRAINT chk_refundAmt_nonnegative CHECK (refundAmt >= 0)
+    CONSTRAINT chk_CIrefund_NNEG CHECK (refundAmt >= 0)
 );
 
 -- Compensation
