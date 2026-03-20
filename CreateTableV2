@@ -80,6 +80,7 @@ CREATE TABLE application(
   CONSTRAINT fk_application_applyBy FOREIGN KEY(applyBy) REFERENCES systemUser(userID),
   CONSTRAINT fk_application_issuedBy FOREIGN KEY(issuedBy) REFERENCES systemAdmin(adminID),
   CONSTRAINT fk_application_restaurantID FOREIGN KEY(restaurantID) REFERENCES restaurant(restaurantID)
+  CONSTRAINT chk_application_status CHECK (status IN ('Pending','Approved','Rejected'))
 );
 
 
@@ -93,10 +94,41 @@ CONSTRAINT fk_restaurantUser_restaurant FOREIGN KEY (restaurantID) REFERENCES re
 );
 
 -- Menu
+CREATE TABLE menu (
+  menuID NUMBER NOT NULL,
+  type VARCHAR2(100) NOT NULL,
+  availability NUMBER(1) NOT NULL,
+  restaurantID NUMBER NOT NULL,
+  CONSTRAINT pk_menu PRIMARY KEY (menuID),
+  CONSTRAINT fk_menu_restaurantID FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
+);
 
 -- MenuItem
+CREATE TABLE menuItem (
+  menuItemID NUMBER NOT NULL,
+  name VARCHAR2(255) NOT NULL,
+  price NUMBER(10,2) NOT NULL,
+  calories NUMBER NOT NULL,
+  sizeOpt NUMBER(1) NOT NULL,
+  sweetness NUMBER(1) NOT NULL ,
+  spiceLevel NUMBER(1) NOT NULL,
+  drinkOpt NUMBER(1) NOT NULL,
+  typeOfMeat VARCHAR2(100),
+  veganFriendly NUMBER(1) NOT NULL,
+  discount NUMBER(5,2) NOT NULL,
+  remark VARCHAR2(500) NOT NULL,
+  CONSTRAINT pk_menuItem PRIMARY KEY (menuItemID),
+  CONSTRAINT chk_menuItem_price CHECK (price >= 0)
+);
 
 -- MultiMenuItem
+CREATE TABLE multiMenuItem (
+  menuID NUMBER NOT NULL,
+  menuItemID NUMBER NOT NULL,
+  CONSTRAINT pk_multiMenuItem PRIMARY KEY (menuID, menuItemID),
+  CONSTRAINT fk_multi_menuID FOREIGN KEY (menuID) REFERENCES menu(menuID),
+  CONSTRAINT fk_multi_menuItemID FOREIGN KEY (menuItemID) REFERENCES menuItem(menuItemID)
+);
 
 -- Campaign
 
@@ -189,6 +221,21 @@ CREATE TABLE orderItem (
 );
 
 -- Payment
+CREATE TABLE payment (
+  paymentID NUMBER NOT NULL,
+  paymentDate DATE NOT NULL,
+  transactionFee NUMBER(10,2),
+  totalAmount NUMBER(10,2) NOT NULL,
+  paymentMethod VARCHAR2(20) NOT NULL,
+  paymentStatus VARCHAR2(50) NOT NULL,
+  orderID NUMBER,
+  userID NUMBER NOT NULL,
+  CONSTRAINT pk_payment PRIMARY KEY (paymentID),
+  CONSTRAINT fk_payment_orderID FOREIGN KEY (orderID) REFERENCES orders(orderID),
+  CONSTRAINT fk_payment_userID FOREIGN KEY (userID) REFERENCES systemUser(userID),
+  CONSTRAINT chk_payment_totalAmount CHECK (totalAmount >= 0),
+  CONSTRAINT chk_payment_paymentStatus CHECK (paymentStatus IN ('Paid','Cancellation with Refund','Compensation with Refund','Compensation with Voucher'))
+);
 
 
 CREATE TABLE membershipType (
