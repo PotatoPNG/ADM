@@ -148,7 +148,7 @@ validPeriod NUMBER NOT NULL,
 createdBy NUMBER NOT NULL,
 CONSTRAINT fk_campaign_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
 CONSTRAINT chk_campaign_type_valid CHECK (type IN ('voucher','membership point earning','cashback')),
-CONSTRAINT chk_campaign_validPeriod_nonnegative CHECK (validPeriod > 0)
+CONSTRAINT chk_cmp_validPeriod CHECK (validPeriod > 0)
 );
 
 -- ParticipatedRestaurant
@@ -157,7 +157,7 @@ campaignID NUMBER NOT NULL,
 restaurantID NUMBER NOT NULL,
 participateDate DATE NOT NULL,
 CONSTRAINT pk_participatedRestaurant PRIMARY KEY (campaignID, restaurantID),
-CONSTRAINT fk_participatedRestaurant_restaurant FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
+CONSTRAINT fk_partRest_rest FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
 CONSTRAINT fk_participatedRestaurant_campaign FOREIGN KEY (campaignID) REFERENCES campaign(campaignID)
 );
 
@@ -179,7 +179,7 @@ status NUMBER(1) NOT NULL,
 createdBy NUMBER NOT NULL,
 CONSTRAINT fk_voucher_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
 CONSTRAINT chk_voucher_type_valid CHECK (type IN ('Discount by rate','Cash Rebate','Free delivery')),
-CONSTRAINT chk_voucher_validPeriod_nonnegative CHECK (validPeriod > 0),
+CONSTRAINT chk_vch_validPeriod CHECK (validPeriod > 0),
 CONSTRAINT chk_deductRate_nonnegative_and_one CHECK (deductRate > 0 AND deductRate <1),
 CONSTRAINT chk_totalRedemptionCount_nonnegative CHECK (totalRedemptionCount > 0)
 );
@@ -357,7 +357,7 @@ CREATE TABLE driverTier(
   CONSTRAINT pk_driverTier PRIMARY KEY(tierID),
   CONSTRAINT fk_driverTier_createdBy FOREIGN KEY (createdBy) REFERENCES systemAdmin (adminID),
   CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerOrder >= 0),
-  CONSTRAINT chk_comPerFastOrder_nonnegative CHECK (comPerFastOrder >= 0),
+  CONSTRAINT chk_fastOrder CHECK (comPerFastOrder >= 0),
   CONSTRAINT chk_comPerKM_nonnegative CHECK (comPerKM >= 0),
   CONSTRAINT chk_orderBonus_nonnegative CHECK (orderBonus >= 0),
   CONSTRAINT chk_limitPerHour_nonnegative CHECK (limitPerHour >= 0)
@@ -379,7 +379,7 @@ CREATE TABLE deliveryDriver(
   currentLocation NUMBER,  
   tierID NUMBER NOT NULL,
   CONSTRAINT pk_deliveryDriver PRIMARY KEY(driverID),
-  CONSTRAINT fk_deliveryDriver_currentLocation FOREIGN KEY(currentLocation) REFERENCES address(addressID),
+  CONSTRAINT fk_drv_currentLoc FOREIGN KEY(currentLocation) REFERENCES address(addressID),
   CONSTRAINT fk_deliveryDriver_tierID FOREIGN KEY(tierID) REFERENCES driverTier(tierID),
   CONSTRAINT chk_point_nonnegative CHECK (point >= 0)
 );
@@ -398,7 +398,7 @@ CREATE TABLE deliveryDriverKPI(
   CONSTRAINT fk_deliveryDriverKPI_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID),
   CONSTRAINT chk_acceptOrder_nonnegative CHECK (acceptOrder >= 0),
   CONSTRAINT chk_delayOrder_nonnegative CHECK (delayOrder >= 0),
-  CONSTRAINT chk_avgDeliveryTime_nonnegative CHECK (avgDeliveryTime >= 0),
+  CONSTRAINT chk_avgDelTime CHECK (avgDeliveryTime >= 0),
   CONSTRAINT chk_avgRatings_nonnegative CHECK (avgRatings >= 0)
 );
 
@@ -418,7 +418,7 @@ CREATE TABLE deliverySchedule(
   destinationAddress NUMBER NOT NULL,
   CONSTRAINT pk_deliverySchedule PRIMARY KEY(scheduleID),
   CONSTRAINT fk_deliverySchedule_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID),
-  CONSTRAINT fk_deliverySchedule_departAddress FOREIGN KEY(departAddress) REFERENCES ADDRESS(addressID),
+  CONSTRAINT fk_delSch_depart FOREIGN KEY(departAddress) REFERENCES ADDRESS(addressID),
   CONSTRAINT fk_deliverySchedule_destinationAddress FOREIGN KEY(destinationAddress) REFERENCES ADDRESS(addressID),
   CONSTRAINT chk_commission_nonnegative CHECK (commission >= 0),
   CONSTRAINT chk_distance_nonnegative CHECK (distance >= 0)
@@ -458,7 +458,7 @@ CREATE TABLE cancellationItem (
     reason VARCHAR2(255),
     refundAmt NUMBER(10,2) NOT NULL,
     CONSTRAINT pk_cancellationItem PRIMARY KEY (cancellationID, orderItemID),
-    CONSTRAINT fk_cancellationItem_cancellation FOREIGN KEY (cancellationID) REFERENCES cancellation(cancellationID),
+    CONSTRAINT fk_cancItem_canc FOREIGN KEY (cancellationID) REFERENCES cancellation(cancellationID),
     CONSTRAINT fk_cancellationItem_orderItem FOREIGN KEY (orderItemID) REFERENCES orderItem(orderItemID),
     CONSTRAINT chk_refundAmt_nonnegative CHECK (refundAmt >= 0)
 );
@@ -488,7 +488,7 @@ CREATE TABLE compensationItem(
   reason VARCHAR2(255) NOT NULL,
   refundAmt NUMBER(10,2) NOT NULL,
   CONSTRAINT pk_compensationItem PRIMARY KEY(compensationID, orderItemID),
-  CONSTRAINT fk_compensationItem_compensationID FOREIGN KEY(compensationID) REFERENCES COMPENSATION(compensationID),
+  CONSTRAINT fk_compItem_comp FOREIGN KEY(compensationID) REFERENCES COMPENSATION(compensationID),
   CONSTRAINT fk_compensationItem_orderItemID FOREIGN KEY(orderItemID) REFERENCES ORDERITEM(orderItemID),
   CONSTRAINT chk_quantity_nonnegative CHECK(quantity >= 0),
   CONSTRAINT chk_unitPrice_nonnegative CHECK(unitPrice >= 0),
