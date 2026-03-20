@@ -316,7 +316,7 @@ CREATE TABLE subscription (
 subscriptionID NUMBER PRIMARY KEY,
 subscriptionDate DATE NOT NULL,
 expiration DATE NOT NULL,
-birthPointRedemption NUMBER(1) NOT NULL
+birthPointRedemption NUMBER(1) NOT NULL,
 status VARCHAR2(20) NOT NULL,
 userID NUMBER NOT NULL,
 typeID NUMBER NOT NULL,
