@@ -327,7 +327,7 @@ createdBy NUMBER NOT NULL,
 CONSTRAINT fk_membershipType_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
 CONSTRAINT chk_charges_positive CHECK (charges > 0),
 CONSTRAINT chk_coinRate_positive CHECK (coinRate >= 0),
-CONSTRAINT chk_birthCoin_positive CHECK (birthCoin >= 0),
+CONSTRAINT chk_birthCoin_positive CHECK (birthCoin >= 0)
 );
 CREATE TABLE subscription (
 subscriptionID NUMBER PRIMARY KEY,
@@ -341,7 +341,7 @@ paymentID NUMBER NOT NULL,
 CONSTRAINT fk_subscription_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
 CONSTRAINT fk_subscription_membershipType FOREIGN KEY (typeID) REFERENCES membershipType(typeID),
 CONSTRAINT fk_subscription_payment FOREIGN KEY (paymentID) REFERENCES payment(paymentID),
-CONSTRAINT chk_subscription_dates CHECK (expiration >= subscriptionDate),
+CONSTRAINT chk_subscription_dates CHECK (expiration >= subscriptionDate)
 );
 
 -- DriverTier
