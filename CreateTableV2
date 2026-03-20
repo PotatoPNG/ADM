@@ -147,8 +147,8 @@ startDate DATE NOT NULL,
 validPeriod NUMBER NOT NULL,
 createdBy NUMBER NOT NULL,
 CONSTRAINT fk_campaign_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
-CONSTRAINT chk_type_valid CHECK (type IN ('voucher','membership point earning','cashback')),
-CONSTRAINT chk_validPeriod_nonnegative CHECK (validPeriod > 0)
+CONSTRAINT chk_campaign_type_valid CHECK (type IN ('voucher','membership point earning','cashback')),
+CONSTRAINT chk_campaign_validPeriod_nonnegative CHECK (validPeriod > 0)
 );
 
 -- ParticipatedRestaurant
@@ -178,8 +178,8 @@ maxRedemption NUMBER,
 status NUMBER(1) NOT NULL,
 createdBy NUMBER NOT NULL,
 CONSTRAINT fk_voucher_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
-CONSTRAINT chk_type_valid CHECK (type IN ('Discount by rate','Cash Rebate','Free delivery')),
-CONSTRAINT chk_validPeriod_nonnegative CHECK (validPeriod > 0),
+CONSTRAINT chk_voucher_type_valid CHECK (type IN ('Discount by rate','Cash Rebate','Free delivery')),
+CONSTRAINT chk_voucher_validPeriod_nonnegative CHECK (validPeriod > 0),
 CONSTRAINT chk_deductRate_nonnegative_and_one CHECK (deductRate > 0 AND deductRate <1),
 CONSTRAINT chk_totalRedemptionCount_nonnegative CHECK (totalRedemptionCount > 0)
 );
