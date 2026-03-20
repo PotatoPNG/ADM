@@ -71,8 +71,8 @@ CREATE TABLE application(
   applicationID NUMBER NOT NULL,
   type VARCHAR2(20) NOT NULL,
   status VARCHAR2(20) NOT NULL,
-  applyDate TIMESTAMP NOT NULL,
-  approveDate TIMESTAMP,
+  applyDate DATE NOT NULL,
+  approveDate DATE,
   applyBy NUMBER NOT NULL,
   issuedBy NUMBER,
   restaurantID NUMBER NOT NULL,
@@ -299,6 +299,19 @@ CREATE TABLE deliverySchedule(
 );
 
 -- Rating
+CREATE TABLE ratings (
+  ratingsID NUMBER NOT NULL,
+  ratingLevel NUMBER NOT NULL,
+  review VARCHAR2(500),
+  createdBy NUMBER NOT NULL,
+  orderID NUMBER,
+  scheduleID NUMBER,
+  CONSTRAINT pk_ratings PRIMARY KEY (ratingsID),
+  CONSTRAINT fk_ratings_createdBy FOREIGN KEY (createdBy) REFERENCES systemUser(userID),
+  CONSTRAINT fk_ratings_orderID FOREIGN KEY (orderID) REFERENCES orders(orderID),
+  CONSTRAINT fk_ratings_scheduleID FOREIGN KEY (scheduleID) REFERENCES deliverySchedule(scheduleID),
+  CONSTRAINT chk_ratings_ratinglevel CHECK (ratingLevel BETWEEN 1 AND 5)
+);
 
 CREATE TABLE cancellation (
     cancellationID NUMBER NOT NULL,
