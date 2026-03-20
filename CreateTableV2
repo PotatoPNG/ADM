@@ -644,3 +644,17 @@ BEGIN
   :NEW.ratingsID := ratings_seq.NEXTVAL;
 END;
 /
+CREATE OR REPLACE TRIGGER campaign_trg
+BEFORE INSERT ON campaign
+FOR EACH ROW 
+BEGIN
+   :NEW.campaignID := campaign_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER voucher_trg
+BEFORE INSERT ON voucher
+FOR EACH ROW
+BEGIN
+   :NEW.voucherID := voucher_seq.NEXTVAL;
+END;
+/
