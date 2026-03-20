@@ -193,21 +193,6 @@ CONSTRAINT fk_campaignVoucher_campaign FOREIGN KEY (campaignID) REFERENCES campa
 CONSTRAINT fk_cmpVch_voucher FOREIGN KEY (voucherID) REFERENCES voucher(voucherID)
 );
 
--- Voucher User
-CREATE TABLE voucherUser(
-serialCode VARCHAR2(19) PRIMARY KEY,
-status varchar(30) NOT NULL,
-voucherID NUMBER NOT NULL,
-userID NUMBER NOT NULL,
-appliedOn NUMBER,
-obtainMethod VARCHAR2(50) NOT NULL,
-CONSTRAINT fk_vchUser_vch FOREIGN KEY (voucherID) REFERENCES voucher(voucherID),
-CONSTRAINT fk_voucherUSer_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
-CONSTRAINT fk_voucherUSer_order FOREIGN KEY (appliedOn) REFERENCES orders(orderID),
-CONSTRAINT chk_status_valid CHECK (status IN ('redeemed','unredeemed')),
-CONSTRAINT chk_obtainMethod_valid CHECK (obtainMethod IN ('campaign','compensation', 'point Redemption'))
-);
-
 --pointredeempt
 CREATE TABLE pointRedemption(
 userID NUMBER,
@@ -297,6 +282,21 @@ CREATE TABLE orderItem (
     CONSTRAINT chk_discPerItem CHECK (discountPerItem >= 0),
     CONSTRAINT chk_totalDiscount_nonnegative CHECK (totalDiscount >= 0),
     CONSTRAINT chk_disNEX_sub CHECK (totalDiscount <= subtotal)
+);
+
+-- Voucher User
+CREATE TABLE voucherUser(
+serialCode VARCHAR2(19) PRIMARY KEY,
+status varchar(30) NOT NULL,
+voucherID NUMBER NOT NULL,
+userID NUMBER NOT NULL,
+appliedOn NUMBER,
+obtainMethod VARCHAR2(50) NOT NULL,
+CONSTRAINT fk_vchUser_vch FOREIGN KEY (voucherID) REFERENCES voucher(voucherID),
+CONSTRAINT fk_voucherUSer_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
+CONSTRAINT fk_voucherUSer_order FOREIGN KEY (appliedOn) REFERENCES orders(orderID),
+CONSTRAINT chk_status_valid CHECK (status IN ('redeemed','unredeemed')),
+CONSTRAINT chk_obtainMethod_valid CHECK (obtainMethod IN ('campaign','compensation', 'point Redemption'))
 );
 
 -- Payment
