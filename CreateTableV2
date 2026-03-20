@@ -394,11 +394,11 @@ CREATE TABLE deliveryDriverKPI(
   recordDate DATE NOT NULL,
   driverID NUMBER NOT NULL,
   CONSTRAINT pk_deliveryDriverKPI PRIMARY KEY(kpiID),
-  CONSTRAINT fk_deliveryDriverKPI_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID)
-  CONSTRAINT chk_acceptOrder_nonnegative CHECK (acceptOrder >= 0);
-  CONSTRAINT chk_delayOrder_nonnegative CHECK (delayOrder >= 0);
-  CONSTRAINT chk_avgDeliveryTime_nonnegative CHECK (avgDeliveryTime >= 0);
-  CONSTRAINT chk_avgRatings_nonnegative CHECK (avgRatings >= 0);
+  CONSTRAINT fk_deliveryDriverKPI_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID),
+  CONSTRAINT chk_acceptOrder_nonnegative CHECK (acceptOrder >= 0),
+  CONSTRAINT chk_delayOrder_nonnegative CHECK (delayOrder >= 0),
+  CONSTRAINT chk_avgDeliveryTime_nonnegative CHECK (avgDeliveryTime >= 0),
+  CONSTRAINT chk_avgRatings_nonnegative CHECK (avgRatings >= 0)
 );
 
 -- DeliverySchedule
