@@ -263,7 +263,7 @@ CREATE TABLE orders (
     CONSTRAINT pk_customerOrder PRIMARY KEY (orderID),
     CONSTRAINT fk_customerOrder_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
     CONSTRAINT fk_customerAddress FOREIGN KEY (deliveryAddress) REFERENCES address(addressID),
-    CONSTRAINT chk_subtotal_nonnegative CHECK (subtotalAmount >= 0),
+    CONSTRAINT chk_ordersub_NNEG CHECK (subtotalAmount >= 0),
     CONSTRAINT chk_deductAmt_nonnegative CHECK (deductAmt >= 0),
     CONSTRAINT chk_deductRate_range CHECK (deductRate BETWEEN 0 AND 100),
     CONSTRAINT chk_totalAmount_nonnegative CHECK (totalAmount >= 0),
