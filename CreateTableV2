@@ -67,6 +67,20 @@ CONSTRAINT chk_serviceTax_range CHECK (serviceTax >= 0 AND serviceTax <= 100),
 );
 
 -- Application
+CREATE TABLE application(
+  applicationID NUMBER NOT NULL,
+  type VARCHAR2(20) NOT NULL,
+  status VARCHAR2(20) NOT NULL,
+  applyDate TIMESTAMP NOT NULL,
+  approveDate TIMESTAMP,
+  applyBy NUMBER NOT NULL,
+  issuedBy NUMBER,
+  restaurantID NUMBER NOT NULL,
+  CONSTRAINT pk_application PRIMARY KEY(applicationID),
+  CONSTRAINT fk_application_applyBy FOREIGN KEY(applyBy) REFERENCES systemUser(userID),
+  CONSTRAINT fk_application_issuedBy FOREIGN KEY(issuedBy) REFERENCES systemAdmin(adminID),
+  CONSTRAINT fk_application_restaurantID FOREIGN KEY(restaurantID) REFERENCES restaurant(restaurantID)
+);
 
 
 CREATE TABLE restaurantUser (
