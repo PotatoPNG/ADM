@@ -79,7 +79,7 @@ CREATE TABLE application(
   CONSTRAINT pk_application PRIMARY KEY(applicationID),
   CONSTRAINT fk_application_applyBy FOREIGN KEY(applyBy) REFERENCES systemUser(userID),
   CONSTRAINT fk_application_issuedBy FOREIGN KEY(issuedBy) REFERENCES systemAdmin(adminID),
-  CONSTRAINT fk_application_restaurantID FOREIGN KEY(restaurantID) REFERENCES restaurant(restaurantID)
+  CONSTRAINT fk_application_restaurantID FOREIGN KEY(restaurantID) REFERENCES restaurant(restaurantID),
   CONSTRAINT chk_application_status CHECK (status IN ('Pending','Approved','Rejected'))
 );
 
@@ -100,7 +100,7 @@ CREATE TABLE menu (
   availability NUMBER(1) NOT NULL,
   restaurantID NUMBER NOT NULL,
   CONSTRAINT pk_menu PRIMARY KEY (menuID),
-  CONSTRAINT fk_menu_restaurantID FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
+  CONSTRAINT fk_menu_restaurantID FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID)
 );
 
 -- MenuItem
@@ -496,14 +496,12 @@ BEGIN
     :NEW.subscriptionID := subscription_seq.NEXTVAL;
 END;
 /
-/
 CREATE OR REPLACE TRIGGER driverTier_trg
 BEFORE INSERT ON driverTier
 FOR EACH ROW
 BEGIN
   :NEW.tierID := driverTier_seq.NEXTVAL; //generate ID based on SEQUENCE's NEXTVAL generated unique number 
 END;
-/
 /
 CREATE OR REPLACE TRIGGER deliveryDriver_trg
 BEFORE INSERT ON deliveryDriver
@@ -512,14 +510,12 @@ BEGIN
   :NEW.driverID := deliveryDriver_seq.NEXTVAL; 
 END;
 /
-/
 CREATE OR REPLACE TRIGGER deliveryDriverKPI_trg
 BEFORE INSERT ON deliveryDriverKPI
 FOR EACH ROW
 BEGIN
   :NEW.kpiID := deliveryDriverKPI_seq.NEXTVAL; 
 END;
-/
 /
 CREATE OR REPLACE TRIGGER deliverySchedule_trg
 BEFORE INSERT ON deliverySchedule
@@ -528,11 +524,45 @@ BEGIN
   :NEW.scheduleID := deliverySchedule_seq.NEXTVAL; 
 END;
 /
-/
 CREATE OR REPLACE TRIGGER compensation_trg
 BEFORE INSERT ON compensation
 FOR EACH ROW
 BEGIN
   :NEW.compensationID := compensation_seq.NEXTVAL; 
+END;
+/
+CREATE OR REPLACE TRIGGER application_trg
+BEFORE INSERT ON application
+FOR EACH ROW
+BEGIN
+  :NEW.applicationID := application_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER menu_trg
+BEFORE INSERT ON menu
+FOR EACH ROW
+BEGIN
+  :NEW.menuID := menu_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER menuItem_trg
+BEFORE INSERT ON menuItem
+FOR EACH ROW
+BEGIN
+  :NEW.menuItemID := menuitem_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER payment_trg
+BEFORE INSERT ON payment
+FOR EACH ROW
+BEGIN
+  :NEW.paymentID := payment_seq.NEXTVAL;
+END;
+/
+CREATE OR REPLACE TRIGGER ratings_trg
+BEFORE INSERT ON ratings
+FOR EACH ROW
+BEGIN
+  :NEW.ratingsID := ratings_seq.NEXTVAL;
 END;
 /
