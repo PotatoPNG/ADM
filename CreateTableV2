@@ -97,7 +97,7 @@ restaurantID NUMBER NOT NULL,
 accessLevel NUMBER NOT NULL,
 CONSTRAINT pk_restaurantUser PRIMARY KEY (userID, restaurantID),
 CONSTRAINT fk_restaurantUser_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
-CONSTRAINT fk_restaurantUser_restaurant FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID),
+CONSTRAINT fk_restaurantUser_restaurant FOREIGN KEY (restaurantID) REFERENCES restaurant(restaurantID)
 );
 
 -- Menu
