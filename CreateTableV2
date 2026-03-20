@@ -163,7 +163,7 @@ CONSTRAINT fk_participatedRestaurant_campaign FOREIGN KEY (campaignID) REFERENCE
 CREATE TABLE voucher(
 voucherID NUMBER PRIMARY KEY,
 name VARCHAR(100) NOT NULL,
-desc VARCHAR(100) NOT NULL,
+description VARCHAR(100) NOT NULL,
 type VARCHAR(30) NOT NULL,
 creationDate DATE NOT NULL,
 validPeriod NUMBER(10,2) NOT NULL,
@@ -176,8 +176,8 @@ status NUMBER(1) NOT NULL,
 createdBy NUMBER NOT NULL,
 CONSTRAINT fk_voucher_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
 CONSTRAINT chk_type_valid CHECK (type IN ('Discount by rate','Cash Rebate','Free delivery')),
-CONSTRAINT chk_validPeriod_nonnegative CHECK (validPeriod > 0)
-CONSTRAINT chk_deductRate_nonnegative_and_one CHECK (validPeriod > 0 AND validPeriod <1)
+CONSTRAINT chk_validPeriod_nonnegative CHECK (validPeriod > 0),
+CONSTRAINT chk_deductRate_nonnegative_and_one CHECK (deductRate > 0 AND deductRate <1),
 CONSTRAINT chk_totalRedemptionCount_nonnegative CHECK (totalRedemptionCount > 0)
 );
 
