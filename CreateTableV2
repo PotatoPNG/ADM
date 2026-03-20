@@ -450,7 +450,7 @@ CREATE TABLE compensation(
   compensationID NUMBER NOT NULL,
   compensation VARCHAR2(255) NOT NULL,
   totalRefundAmt NUMBER(10,2),
-  issuedDate DATE NOT NULL;
+  issuedDate DATE NOT NULL,
   scheduleID NUMBER,
   orderID NUMBER NOT NULL,
   voucherID NUMBER,
