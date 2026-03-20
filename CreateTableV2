@@ -354,7 +354,7 @@ CREATE TABLE driverTier(
   limitPerHour NUMBER NOT NULL,
   createdBy NUMBER NOT NULL, 
   CONSTRAINT pk_driverTier PRIMARY KEY(tierID),
-  CONSTRAINT fk_driverTier_createdBy FOREIGN KEY (createdBy) REFERENCES systemAdmin (adminID)
+  CONSTRAINT fk_driverTier_createdBy FOREIGN KEY (createdBy) REFERENCES systemAdmin (adminID),
   CONSTRAINT chk_comPerOrder_nonnegative CHECK (comPerOrder >= 0),
   CONSTRAINT chk_comPerFastOrder_nonnegative CHECK (comPerFastOrder >= 0),
   CONSTRAINT chk_comPerKM_nonnegative CHECK (comPerKM >= 0),
