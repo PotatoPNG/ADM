@@ -242,7 +242,7 @@ CREATE TABLE orders (
     deliveryMethod VARCHAR2(100),
     deliveryFee NUMBER(10,2),
     userID NUMBER NOT NULL,
-    deliveryAddress NUMBER NOT NULL,
+    deliveryAddress NUMBER,
     CONSTRAINT pk_customerOrder PRIMARY KEY (orderID),
     CONSTRAINT fk_customerOrder_user FOREIGN KEY (userID) REFERENCES systemUser(userID),
     CONSTRAINT fk_customerAddress FOREIGN KEY (deliveryAddress) REFERENCES address(addressID),
