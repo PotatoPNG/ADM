@@ -179,8 +179,7 @@ createdBy NUMBER NOT NULL,
 CONSTRAINT fk_voucher_admin FOREIGN KEY (createdBy) REFERENCES systemAdmin(adminID),
 CONSTRAINT chk_voucher_type_valid CHECK (type IN ('Discount by rate','Cash Rebate','Free delivery')),
 CONSTRAINT chk_vch_validPeriod CHECK (validPeriod > 0),
-CONSTRAINT chk_deductRate CHECK (deductRate > 0 AND deductRate <1),
-CONSTRAINT chk_tdp_nonneg CHECK (totalRedemptionCount > 0)
+CONSTRAINT chk_deductRate CHECK (deductRate > 0 AND deductRate <1)
 );
 
 -- campaign Voucher
