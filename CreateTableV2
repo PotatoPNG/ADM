@@ -229,7 +229,7 @@ CREATE TABLE cartItem (
 CREATE TABLE orders (
     orderID NUMBER NOT NULL,
     orderAt DATE NOT NULL,
-    preparedTime DATE NOT NULL,
+    preparedTime DATE,
     orderStatus VARCHAR2(20) NOT NULL,
     subtotalAmount NUMBER(10,2) NOT NULL,
     deductAmt NUMBER(10,2),
