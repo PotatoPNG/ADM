@@ -351,6 +351,7 @@ CREATE TABLE driverTier(
   comPerKM NUMBER (10,2)  NOT NULL,
   orderBonus NUMBER (10,2)  NOT NULL,
   limitPerHour NUMBER NOT NULL,
+  achieveBy NUMBER NOT NULL,
   createdBy NUMBER NOT NULL, 
   CONSTRAINT pk_driverTier PRIMARY KEY(tierID),
   CONSTRAINT fk_driverTier_createdBy FOREIGN KEY (createdBy) REFERENCES systemAdmin (adminID),
