@@ -346,6 +346,7 @@ CONSTRAINT chk_subscription_dates CHECK (expiration >= subscriptionDate)
 -- DriverTier
 CREATE TABLE driverTier(
   tierID NUMBER NOT NULL,
+  tier VARCHAR2(255) NOT NULL,
   comPerOrder NUMBER (10,2)  NOT NULL,
   comPerFastOrder NUMBER (10,2) NOT NULL,
   comPerKM NUMBER (10,2)  NOT NULL,
