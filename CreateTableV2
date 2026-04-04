@@ -423,10 +423,10 @@ CREATE TABLE deliverySchedule(
   destinationAddress NUMBER NOT NULL,
   orderID NUMBER NOT NULL,
   CONSTRAINT pk_deliverySchedule PRIMARY KEY(scheduleID),
-  CONSTRAINT fk_deliverySchedule_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID),
-  CONSTRAINT fk_deliverySchedule_departAddress FOREIGN KEY(departAddress) REFERENCES ADDRESS(addressID),
-  CONSTRAINT fk_deliverySchedule_destinationAddress FOREIGN KEY(destinationAddress) REFERENCES ADDRESS(addressID),
-  CONSTRAINT fk_deliverySchedule_orderID FOREIGN KEY(orderID) REFERENCES ORDERS(orderID),
+  CONSTRAINT fk_delSch_driverID FOREIGN KEY(driverID) REFERENCES DELIVERYDRIVER(driverID),
+  CONSTRAINT fk_delSch_departAddress FOREIGN KEY(departAddress) REFERENCES ADDRESS(addressID),
+  CONSTRAINT fk_delSch_destinationAddress FOREIGN KEY(destinationAddress) REFERENCES ADDRESS(addressID),
+  CONSTRAINT fk_delSch_orderID FOREIGN KEY(orderID) REFERENCES ORDERS(orderID),
   CONSTRAINT chk_commission_nonnegative CHECK (commission >= 0),
   CONSTRAINT chk_distance_nonnegative CHECK (distance >= 0)
 );
