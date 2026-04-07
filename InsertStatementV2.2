@@ -408,6 +408,7 @@ INTO voucher (name, description, type, pointToRedeem, creationDate, validPeriod,
 INTO voucher (name, description, type, pointToRedeem, creationDate, validPeriod, minSpendAmt, deductAmt, deductRate, totalRedemptionCount, maxRedemption, status, createdBy) VALUES ('Ramadhan Ship', 'Free delivery', 'Free delivery', null, TO_DATE('2026-02-18 22:49:05','YYYY-MM-DD HH24:MI:SS'), 125, 10, 7, null, 10, 200, 0, 1)
 INTO voucher (name, description, type, pointToRedeem, creationDate, validPeriod, minSpendAmt, deductAmt, deductRate, totalRedemptionCount, maxRedemption, status, createdBy) VALUES ('Weekend 12%', 'Weekend discount', 'Discount by rate', 120, TO_DATE('2026-02-21 10:28:37','YYYY-MM-DD HH24:MI:SS'), 123, 10, null, 0.12, 0, 200, 0, 1)
 INTO voucher (name, description, type, pointToRedeem, creationDate, validPeriod, minSpendAmt, deductAmt, deductRate, totalRedemptionCount, maxRedemption, status, createdBy) VALUES ('Weekend RM10', 'Weekend discount', 'Cash Rebate', 100, TO_DATE('2026-02-21 18:35:22','YYYY-MM-DD HH24:MI:SS'), 124, 10, 10, null, 0, 200, 0, 1)
+INTO voucher (name, description, type, pointToRedeem, creationDate, validPeriod, minSpendAmt, deductAmt, deductRate, totalRedemptionCount, maxRedemption, status, createdBy) VALUES ('Weekend RM50', 'super weekend discount', 'Cash Rebate', null, TO_DATE('2026-02-22 18:35:22','YYYY-MM-DD HH24:MI:SS'), 124, 200, 50, null, 0, 200, 0, 1)
 
 -- campaign Voucher
 INTO campaignVoucher (campaignID, voucherID) VALUES(1, 17)
@@ -465,6 +466,7 @@ INTO campaignVoucher (campaignID, voucherID) VALUES(29, 16)
 INTO campaignVoucher (campaignID, voucherID) VALUES(30, 18)
 INTO campaignVoucher (campaignID, voucherID) VALUES(30, 19)
 INTO campaignVoucher (campaignID, voucherID) VALUES(32, 36)
+INTO campaignVoucher (campaignID, voucherID) VALUES(2, 56);
 
 -- Voucher User
 INTO voucherUser (serialCode, status, voucherID, userID, appliedOn, obtainMethod) VALUES('A9D4-LM2P-7QWX-ZR81', 'redeemed', 2, 4, 922, 'campaign')
@@ -1772,6 +1774,7 @@ INTO voucherUser (serialCode, status, voucherID, userID, appliedOn, obtainMethod
 INTO voucherUser (serialCode, status, voucherID, userID, appliedOn, obtainMethod) VALUES('V1RM-2QXL-720P-G5YU', 'unredeemed', 18, 1, null, 'campaign')
 INTO voucherUser (serialCode, status, voucherID, userID, appliedOn, obtainMethod) VALUES('V1RM-2QXL-7K2P-G509', 'unredeemed', 20, 1, null, 'campaign')
 INTO voucherUser (serialCode, status, voucherID, userID, appliedOn, obtainMethod) VALUES('GURM-2QXL-7K2P-G512', 'unredeemed', 12, 1, null, 'campaign')
+INTO voucherUser (serialCode, status, voucherID, userID, appliedOn, obtainMethod) VALUES('GURN-2QXJ-7K2I-G514', 'unredeemed', 56, 1, null, 'campaign')
 
 --point redemption
 INTO pointRedemption(userID, voucherID, point, redeemDate) VALUES (11, 8, 250, TO_DATE('2025-12-29 11:23:47','YYYY-MM-DD HH24:MI:SS'))
